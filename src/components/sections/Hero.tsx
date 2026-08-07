@@ -1,31 +1,20 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Download, ArrowUpRight, Code2 } from "lucide-react";
-import {
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiPython,
-  SiMongodb,
-  SiMysql,
-  SiPostgresql,
-} from "react-icons/si";
 
 export const Hero = () => {
   const { t } = useTranslation();
 
   const techIcons = [
-    { icon: SiJavascript, color: "#F7DF1E", label: "JavaScript" },
-    { icon: SiTypescript, color: "#3178C6", label: "TypeScript" },
-    { icon: SiReact, color: "#61DAFB", label: "React" },
-    { icon: SiNextdotjs, color: "#FFFFFF", label: "Next.js" },
-    { icon: SiNodedotjs, color: "#339933", label: "Node.js" },
-    { icon: SiPython, color: "#3776AB", label: "Python" },
-    { icon: SiMongodb, color: "#47A248", label: "MongoDB" },
-    { icon: SiMysql, color: "#4479A1", label: "MySQL" },
-    { icon: SiPostgresql, color: "#4169E1", label: "PostgreSQL" },
+    { icon: "javascript", label: "JavaScript" },
+    { icon: "typescript", label: "TypeScript" },
+    { icon: "react", label: "React" },
+    { icon: "nextjs", label: "Next.js" },
+    { icon: "nodejs", label: "Node.js" },
+    { icon: "python", label: "Python" },
+    { icon: "mongodb", label: "MongoDB" },
+    { icon: "mysql", label: "MySQL" },
+    { icon: "postgresql", label: "PostgreSQL" },
   ];
 
   return (
@@ -116,9 +105,10 @@ export const Hero = () => {
                     className="w-10 h-10 rounded-xl bg-dark-200 border border-white/5 flex items-center justify-center hover:border-primary/50 transition-all duration-300 hover:scale-110"
                     title={tech.label}
                   >
-                    <tech.icon
+                    <img
+                      src={`https://skillicons.dev/icons?i=${tech.icon}`}
+                      alt={tech.label}
                       className="w-5 h-5"
-                      style={{ color: tech.color }}
                     />
                   </div>
                 ))}
