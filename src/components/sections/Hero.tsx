@@ -142,7 +142,7 @@ export const Hero = () => {
             </div>
 
             {/* Code Widget - Positioned in front of avatar */}
-            <div className="absolute top-[120px] right-[30px] z-30">
+            <div className="absolute top-[250px] left-[400px] z-30">
               <div className="bg-dark-200/90 backdrop-blur-sm rounded-2xl border border-white/10 p-4 w-56">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-3 pb-3 border-b border-white/10">
