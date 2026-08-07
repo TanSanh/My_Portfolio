@@ -32,6 +32,7 @@ export const Hero = () => {
     <section
       id="home"
       className="scroll-mt-16 h-screen flex items-center relative overflow-hidden"
+      style={{ backgroundColor: "#000612" }}
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center">

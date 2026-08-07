@@ -48,16 +48,21 @@
     "viewProject": "Xem Dự Án"
   },
   "contact": {
-    "title": "HÃY CỘNG TÁC CÙNG NHAU",
+    "title": "Liên Hệ",
+    "titleHighlight": "Với Tôi",
     "subtitle": "Bạn có dự án trong đầu?",
     "description": "Tôi luôn sẵn sàng thảo luận về các dự án và cơ hội mới. Hãy cùng nhau tạo nên điều tuyệt vời!",
     "getInTouch": "Liên Hệ Ngay",
-    "testimonial": {
-      "quote": "Sanh là một nhà phát triển xuất sắc, luôn bàn giao công việc chất lượng cao đúng hạn. Sự chú trọng đến chi tiết và kỹ năng giải quyết vấn đề của anh ấy rất nổi bật.",
-      "author": "Tấn Sanh",
-      "role": "Backend Programmer"
-    },
-    "followMe": "THEO DÕI TÔI"
+    "followMe": "THEO DÕI TÔI",
+    "form": {
+      "name": "Họ tên",
+      "namePlaceholder": "Nguyễn Văn A",
+      "email": "Email",
+      "emailPlaceholder": "email@gmail.com",
+      "message": "Nội dung",
+      "messagePlaceholder": "Hãy cho tôi biết về dự án của bạn...",
+      "send": "Gửi Tin Nhắn"
+    }
   },
   "footer": {
     "copyright": "© 2026 Tấn Sanh. Mọi quyền được bảo lưu."

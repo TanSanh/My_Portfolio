@@ -10,6 +10,7 @@ export const Skills = () => {
     <section
       id="skills"
       className="scroll-mt-16 h-screen flex flex-col justify-center"
+      style={{ backgroundColor: "#000612" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
         {/* Section Header */}

@@ -23,7 +23,7 @@ export const About = () => {
     <section
       id="about"
       className="scroll-mt-16 h-screen flex flex-col justify-center"
-      style={{ backgroundColor: "#040B1B" }}
+      style={{ backgroundColor: "#040B1D" }}
     >
       {/* CSS Keyframes for swinging animation */}
       <style>{`

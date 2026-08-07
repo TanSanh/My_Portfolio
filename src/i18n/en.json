@@ -48,16 +48,21 @@
     "viewProject": "View Project"
   },
   "contact": {
-    "title": "LET'S WORK TOGETHER",
+    "title": "Contact",
+    "titleHighlight": "Me",
     "subtitle": "Have a project in mind?",
     "description": "I'm always open to discussing new projects and opportunities. Let's create something amazing together!",
     "getInTouch": "Get In Touch",
-    "testimonial": {
-      "quote": "Sanh is an exceptional developer who delivers high-quality work on time. His attention to detail and problem-solving skills are outstanding.",
-      "author": "Tấn Sanh",
-      "role": "Backend Programmer"
-    },
-    "followMe": "FOLLOW ME"
+    "followMe": "FOLLOW ME",
+    "form": {
+      "name": "Your Name",
+      "namePlaceholder": "Nguyen Van A",
+      "email": "Your Email",
+      "emailPlaceholder": "email@gmail.com",
+      "message": "Message",
+      "messagePlaceholder": "Tell me about your project...",
+      "send": "Send Message"
+    }
   },
   "footer": {
     "copyright": "© 2026 Tấn Sanh. All rights reserved."
