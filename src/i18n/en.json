@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "hireMe": "Hire Me"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Sanh",
+    "tagline": "I build things for the web.",
+    "description": "I'm a passionate Backend Programmer specializing in building robust and scalable server-side applications with modern technologies.",
+    "viewWork": "View My Work",
+    "downloadCV": "Download CV",
+    "technologies": "TECHNOLOGIES I WORK WITH"
+  },
+  "about": {
+    "title": "ABOUT ME",
+    "subtitle": "I'm passionate about creating digital solutions",
+    "description": "With 1+ years of experience in backend development, I help businesses build robust, scalable, and efficient server-side applications.",
+    "learnMore": "Learn More About Me",
+    "stats": {
+      "experience": {
+        "value": "1+",
+        "label": "Years Experience"
+      },
+      "projects": {
+        "value": "10+",
+        "label": "Projects Completed"
+      },
+      "clients": {
+        "value": "10+",
+        "label": "Happy Clients"
+      },
+      "satisfaction": {
+        "value": "100%",
+        "label": "Client Satisfaction"
+      }
+    }
+  },
+  "skills": {
+    "title": "MY SKILLS",
+    "subtitle": "Technologies I Master"
+  },
+  "projects": {
+    "title": "FEATURED PROJECTS",
+    "subtitle": "Some of My Recent Work",
+    "viewProject": "View Project"
+  },
+  "contact": {
+    "title": "LET'S WORK TOGETHER",
+    "subtitle": "Have a project in mind?",
+    "description": "I'm always open to discussing new projects and opportunities. Let's create something amazing together!",
+    "getInTouch": "Get In Touch",
+    "testimonial": {
+      "quote": "Sanh is an exceptional developer who delivers high-quality work on time. His attention to detail and problem-solving skills are outstanding.",
+      "author": "Tấn Sanh",
+      "role": "Backend Programmer"
+    },
+    "followMe": "FOLLOW ME"
+  },
+  "footer": {
+    "copyright": "© 2026 Tấn Sanh. All rights reserved."
+  }
+}

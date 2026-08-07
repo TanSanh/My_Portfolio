@@ -1,0 +1,68 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "skills": "Kỹ năng",
+    "projects": "Dự án",
+    "blog": "Blog",
+    "contact": "Liên hệ",
+    "hireMe": "Thuê Tôi"
+  },
+  "hero": {
+    "greeting": "Xin chào, tôi là",
+    "name": "Sanh",
+    "tagline": "Tôi xây dựng mọi thứ cho web.",
+    "description": "Tôi là một Backend Programmer đam mê, chuyên xây dựng các ứng dụng server-side mạnh mẽ và mở rộng với các công nghệ hiện đại.",
+    "viewWork": "Xem Công Việc",
+    "downloadCV": "Tải CV",
+    "technologies": "CÔNG NGHỆ TÔI SỬ DỤNG"
+  },
+  "about": {
+    "title": "VỀ TÔI",
+    "subtitle": "Tôi đam mê tạo ra các giải pháp số",
+    "description": "Với hơn 1 năm kinh nghiệm trong phát triển backend, tôi giúp các doanh nghiệp xây dựng các ứng dụng server-side mạnh mẽ, mở rộng và hiệu quả.",
+    "learnMore": "Tìm Hiểu Thêm Về Tôi",
+    "stats": {
+      "experience": {
+        "value": "1+",
+        "label": "Năm Kinh Nghiệm"
+      },
+      "projects": {
+        "value": "10+",
+        "label": "Dự Án Hoàn Thành"
+      },
+      "clients": {
+        "value": "10+",
+        "label": "Khách Hàng Hài Lòng"
+      },
+      "satisfaction": {
+        "value": "100%",
+        "label": "Sự Hài Lòng"
+      }
+    }
+  },
+  "skills": {
+    "title": "KỸ NĂNG",
+    "subtitle": "Công Nghệ Tôi Thành Thạo"
+  },
+  "projects": {
+    "title": "DỰ ÁN NỔI BẬT",
+    "subtitle": "Một Số Công Việc Gần Đây",
+    "viewProject": "Xem Dự Án"
+  },
+  "contact": {
+    "title": "HÃY CỘNG TÁC CÙNG NHAU",
+    "subtitle": "Bạn có dự án trong đầu?",
+    "description": "Tôi luôn sẵn sàng thảo luận về các dự án và cơ hội mới. Hãy cùng nhau tạo nên điều tuyệt vời!",
+    "getInTouch": "Liên Hệ Ngay",
+    "testimonial": {
+      "quote": "Sanh là một nhà phát triển xuất sắc, luôn bàn giao công việc chất lượng cao đúng hạn. Sự chú trọng đến chi tiết và kỹ năng giải quyết vấn đề của anh ấy rất nổi bật.",
+      "author": "Tấn Sanh",
+      "role": "Backend Programmer"
+    },
+    "followMe": "THEO DÕI TÔI"
+  },
+  "footer": {
+    "copyright": "© 2026 Tấn Sanh. Mọi quyền được bảo lưu."
+  }
+}
