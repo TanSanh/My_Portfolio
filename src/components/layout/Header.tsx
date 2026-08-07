@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Menu, X, Code2, Globe } from "lucide-react";
 import { useLanguage } from "../../hooks/useLanguage";
@@ -7,15 +7,37 @@ export const Header = () => {
   const { t } = useTranslation();
   const { currentLanguage, toggleLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   const navItems = [
-    { key: "nav.home", href: "#home" },
-    { key: "nav.about", href: "#about" },
-    { key: "nav.skills", href: "#skills" },
-    { key: "nav.projects", href: "#projects" },
-    { key: "nav.blog", href: "#blog" },
-    { key: "nav.contact", href: "#contact" },
+    { key: "nav.home", href: "#home", id: "home" },
+    { key: "nav.about", href: "#about", id: "about" },
+    { key: "nav.skills", href: "#skills", id: "skills" },
+    { key: "nav.projects", href: "#projects", id: "projects" },
+    { key: "nav.contact", href: "#contact", id: "contact" },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems
+        .map((item) => document.getElementById(item.id))
+        .filter(Boolean);
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 100) {
+            setActiveSection(navItems[i].id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -40,20 +62,23 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <button
-                key={item.key}
-                onClick={() => scrollToSection(item.href)}
-                className={`text-sm font-medium transition-colors relative pb-1 ${
-                  index === 0 ? "text-white" : "text-gray-400 hover:text-white"
-                }`}
-              >
-                {t(item.key)}
-                {index === 0 && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
-                )}
-              </button>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => scrollToSection(item.href)}
+                  className={`text-sm font-medium transition-colors relative pb-1 ${
+                    isActive ? "text-white" : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {t(item.key)}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* Right side actions */}
@@ -95,15 +120,22 @@ export const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-white/5">
             <div className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-gray-400 hover:text-white transition-colors text-left text-sm font-medium"
-                >
-                  {t(item.key)}
-                </button>
-              ))}
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.key}
+                    onClick={() => scrollToSection(item.href)}
+                    className={`transition-colors text-left text-sm font-medium ${
+                      isActive
+                        ? "text-white border-l-2 border-primary pl-3"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                    {t(item.key)}
+                  </button>
+                );
+              })}
               <button
                 onClick={() => scrollToSection("#contact")}
                 className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-medium transition-all w-full"
