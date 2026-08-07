@@ -43,8 +43,8 @@
     "tableTitle": "TECH STACK"
   },
   "projects": {
-    "title": "FEATURED PROJECTS",
-    "subtitle": "Some of My Recent Work",
+    "title": "Featured",
+    "titleHighlight": "Projects",
     "viewProject": "View Project"
   },
   "contact": {

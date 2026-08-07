@@ -38,4 +38,12 @@
   .bg-gradient-card {
     @apply bg-gradient-to-br from-dark-200/50 to-dark-300/50 backdrop-blur-sm;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -1,95 +1,333 @@
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Code2 } from 'lucide-react';
-import { projects } from '../../data/projects';
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Code2, ChevronLeft, ChevronRight } from "lucide-react";
+import { projects } from "../../data/projects";
 
 export const Projects = () => {
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language as 'en' | 'vi';
+  const currentLang = i18n.language as "en" | "vi";
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const totalProjects = projects.length;
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % totalProjects);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
+  };
+
+  const getCardStyle = (index: number) => {
+    const offset = index - activeIndex;
+    const normalizedOffset =
+      (offset + totalProjects) % totalProjects > totalProjects / 2
+        ? ((offset + totalProjects) % totalProjects) - totalProjects
+        : (offset + totalProjects) % totalProjects;
+
+    const show5Cards = totalProjects >= 5;
+
+    if (normalizedOffset === 0) {
+      // Center card
+      return {
+        x: 0,
+        z: 0,
+        rotateY: 0,
+        scale: 1,
+        opacity: 1,
+        zIndex: 10,
+      };
+    } else if (show5Cards) {
+      // 2-1-2 layout for 5+ projects
+      if (normalizedOffset === -1) {
+        // Left inner
+        return {
+          x: -280,
+          z: -150,
+          rotateY: 25,
+          scale: 0.85,
+          opacity: 0.85,
+          zIndex: 8,
+        };
+      } else if (normalizedOffset === 1) {
+        // Right inner
+        return {
+          x: 280,
+          z: -150,
+          rotateY: -25,
+          scale: 0.85,
+          opacity: 0.85,
+          zIndex: 8,
+        };
+      } else if (normalizedOffset === -2) {
+        // Left outer
+        return {
+          x: -480,
+          z: -300,
+          rotateY: 40,
+          scale: 0.7,
+          opacity: 0.5,
+          zIndex: 6,
+        };
+      } else if (normalizedOffset === 2) {
+        // Right outer
+        return {
+          x: 480,
+          z: -300,
+          rotateY: -40,
+          scale: 0.7,
+          opacity: 0.5,
+          zIndex: 6,
+        };
+      } else {
+        // Hidden
+        return {
+          x: normalizedOffset > 0 ? 700 : -700,
+          z: -500,
+          rotateY: normalizedOffset > 0 ? -45 : 45,
+          scale: 0.5,
+          opacity: 0,
+          zIndex: 1,
+        };
+      }
+    } else {
+      // 1-1-1 layout for <=4 projects
+      if (
+        normalizedOffset === -1 ||
+        (normalizedOffset === totalProjects - 1 && totalProjects <= 3)
+      ) {
+        // Left card
+        return {
+          x: -300,
+          z: -200,
+          rotateY: 30,
+          scale: 0.82,
+          opacity: 0.75,
+          zIndex: 5,
+        };
+      } else if (
+        normalizedOffset === 1 ||
+        (normalizedOffset === -(totalProjects - 1) && totalProjects <= 3)
+      ) {
+        // Right card
+        return {
+          x: 300,
+          z: -200,
+          rotateY: -30,
+          scale: 0.82,
+          opacity: 0.75,
+          zIndex: 5,
+        };
+      } else {
+        // Hidden
+        return {
+          x: normalizedOffset > 0 ? 600 : -600,
+          z: -400,
+          rotateY: normalizedOffset > 0 ? -45 : 45,
+          scale: 0.6,
+          opacity: 0,
+          zIndex: 1,
+        };
+      }
+    }
+  };
 
   return (
-    <section id="projects" className="scroll-mt-16 py-20 lg:py-32" style={{ backgroundColor: "#040B1D" }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="projects"
+      className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+      style={{ backgroundColor: "#040B1D" }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="text-center mb-6"
         >
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full mb-6">
-            <span className="text-primary text-sm font-medium uppercase tracking-wider">
-              {t('projects.title')}
+          <motion.h2
+            className="text-4xl lg:text-5xl font-bold text-white mb-2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {t("projects.title")}{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              {t("projects.titleHighlight")}
             </span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-white">
-            {t('projects.subtitle')}
-          </h2>
+          </motion.h2>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          />
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
-            >
-              <div className="bg-dark-200/50 backdrop-blur-sm rounded-2xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300">
-                {/* Project Image */}
-                <div className="relative h-52 bg-dark-400 overflow-hidden">
-                  {/* Number Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="text-white/80 text-sm font-mono">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-                  {/* Image Placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                    <Code2 className="w-16 h-16 text-gray-600 group-hover:text-primary/50 transition-colors duration-300" />
-                  </div>
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white text-dark-300 px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 hover:scale-105 transition-transform"
-                    >
-                      {t('projects.viewProject')}
-                      <ArrowUpRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
+        {/* Coverflow Carousel */}
+        <div
+          className="relative h-[440px] flex items-center justify-center"
+          style={{ perspective: "1200px" }}
+        >
+          {/* Cards Container */}
+          <div
+            className="relative flex items-center justify-center"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <AnimatePresence mode="popLayout">
+              {projects.map((project, index) => {
+                const style = getCardStyle(index);
+                const isActive = index === activeIndex;
 
-                {/* Project Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {project.title[currentLang]}
-                  </h3>
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                    {project.description[currentLang]}
-                  </p>
-                  <a
-                    href={project.link}
-                    className="inline-flex items-center gap-1 text-primary text-sm font-medium hover:gap-2 transition-all"
+                return (
+                  <motion.div
+                    key={project.id}
+                    className="absolute"
+                    initial={false}
+                    animate={{
+                      x: style.x,
+                      z: style.z,
+                      rotateY: style.rotateY,
+                      scale: style.scale,
+                      opacity: style.opacity,
+                    }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.32, 0.72, 0, 1],
+                    }}
+                    style={{
+                      left: "50%",
+                      marginLeft: "-140px",
+                      transformStyle: "preserve-3d",
+                      zIndex: style.zIndex,
+                    }}
                   >
-                    {t('projects.viewProject')}
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                    <div
+                      className={`w-[280px] h-[380px] bg-dark-200/80 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-300 ${
+                        isActive
+                          ? "border-2 border-primary/50 shadow-2xl shadow-primary/20"
+                          : "border border-white/10"
+                      }`}
+                      onClick={() => {
+                        if (!isActive) {
+                          setActiveIndex(index);
+                        }
+                      }}
+                    >
+                      {/* Project Image */}
+                      <div className="relative h-44 bg-dark-400 overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                          <Code2
+                            className={`w-14 h-14 transition-colors duration-300 ${
+                              isActive ? "text-primary/60" : "text-gray-600"
+                            }`}
+                          />
+                        </div>
+
+                        {/* Hover Overlay - Only on active card */}
+                        {isActive && (
+                          <motion.a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
+                            className="absolute inset-0 bg-gradient-to-br from-primary/90 to-secondary/90 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span className="bg-white text-dark-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg">
+                              {t("projects.viewProject")}
+                              <ArrowUpRight className="w-4 h-4" />
+                            </span>
+                          </motion.a>
+                        )}
+
+                        {/* Active indicator */}
+                        {isActive && (
+                          <div className="absolute top-3 right-3">
+                            <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Project Info */}
+                      <div className="p-5">
+                        <h3
+                          className={`text-base font-bold mb-2 transition-colors duration-300 ${
+                            isActive ? "text-white" : "text-gray-300"
+                          }`}
+                        >
+                          {project.title[currentLang]}
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-3 leading-relaxed line-clamp-2">
+                          {project.description[currentLang]}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.technologies.slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className={`text-[10px] px-2 py-0.5 rounded-md border transition-colors duration-300 ${
+                                isActive
+                                  ? "bg-primary/20 text-primary border-primary/30"
+                                  : "bg-primary/10 text-primary/60 border-primary/15"
+                              }`}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                          {project.technologies.length > 4 && (
+                            <span className="text-[10px] px-2 py-0.5 bg-dark-300/50 text-gray-500 rounded-md">
+                              +{project.technologies.length - 4}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
+
+          {/* Navigation Arrows */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handlePrev}
+            className="absolute left-4 lg:left-8 z-30 w-12 h-12 rounded-full bg-dark-200/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleNext}
+            className="absolute right-4 lg:right-8 z-30 w-12 h-12 rounded-full bg-dark-200/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </motion.button>
         </div>
 
-        {/* Carousel Dots */}
-        <div className="flex justify-center gap-2 mt-10">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary" />
-          <div className="w-2.5 h-2.5 rounded-full bg-gray-600" />
-          <div className="w-2.5 h-2.5 rounded-full bg-gray-600" />
+        {/* Dots Indicator */}
+        <div className="flex justify-center gap-3 mt-2">
+          {projects.map((_, i) => (
+            <motion.button
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              animate={{
+                width: i === activeIndex ? 32 : 10,
+                backgroundColor: i === activeIndex ? "#8b5cf6" : "#4b5563",
+              }}
+              whileHover={{ scale: 1.2 }}
+              transition={{ duration: 0.3 }}
+              className="h-2.5 rounded-full"
+            />
+          ))}
         </div>
       </div>
     </section>
