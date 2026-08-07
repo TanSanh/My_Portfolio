@@ -7,7 +7,7 @@ export const Skills = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="skills" className="py-20 lg:py-32 bg-dark-100/50">
+    <section id="skills" className="scroll-mt-16 py-20 lg:py-32 bg-dark-100/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div

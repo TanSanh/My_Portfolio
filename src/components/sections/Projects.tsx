@@ -8,7 +8,7 @@ export const Projects = () => {
   const currentLang = i18n.language as 'en' | 'vi';
 
   return (
-    <section id="projects" className="py-20 lg:py-32">
+    <section id="projects" className="scroll-mt-16 py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div

@@ -18,10 +18,11 @@
     "technologies": "TECHNOLOGIES I WORK WITH"
   },
   "about": {
-    "title": "ABOUT ME",
-    "subtitle": "I'm passionate about creating digital solutions",
-    "description": "With 1+ years of experience in backend development, I help businesses build robust, scalable, and efficient server-side applications.",
-    "learnMore": "Learn More About Me",
+    "title": "About",
+    "titleHighlight": "Me",
+    "subtitle": "A blend of code logic and sustainable system architecture.",
+    "bio1": "My journey in tech started from high school. As a self-taught developer, I'm comfortable solving problems independently. For me, coding is the art of composing logic that comes alive on the server.",
+    "bio2": "I specialize in backend development, building robust APIs, designing database architectures, and deploying scalable systems. Every line of code I write is crafted to be efficient, maintainable, and production-ready.",
     "stats": {
       "experience": {
         "value": "1+",
@@ -34,10 +35,6 @@
       "clients": {
         "value": "10+",
         "label": "Happy Clients"
-      },
-      "satisfaction": {
-        "value": "100%",
-        "label": "Client Satisfaction"
       }
     }
   },

@@ -18,10 +18,11 @@
     "technologies": "CÔNG NGHỆ TÔI SỬ DỤNG"
   },
   "about": {
-    "title": "VỀ TÔI",
-    "subtitle": "Tôi đam mê tạo ra các giải pháp số",
-    "description": "Với hơn 1 năm kinh nghiệm trong phát triển backend, tôi giúp các doanh nghiệp xây dựng các ứng dụng server-side mạnh mẽ, mở rộng và hiệu quả.",
-    "learnMore": "Tìm Hiểu Thêm Về Tôi",
+    "title": "Giới Thiệu",
+    "titleHighlight": "Bản Thân",
+    "subtitle": "Sự kết hợp giữa logic mã nguồn và kiến trúc hệ thống bền vững",
+    "bio1": "Hành trình của tôi trong lĩnh vực công nghệ bắt đầu từ ghế nhà trường. Là một lập trình viên tự học, tôi quen với việc giải quyết vấn đề một cách độc lập. Đối với tôi, coding là nghệ thuật sắp xếp các logic sống động trên server.",
+    "bio2": "Tôi chuyên về phát triển backend, xây dựng API mạnh mẽ, thiết kế kiến trúc cơ sở dữ liệu và triển khai các hệ thống có khả năng mở rộng. Mỗi dòng code tôi viết đều được tạo ra để hiệu quả, dễ bảo trì và sẵn sàng sản xuất.",
     "stats": {
       "experience": {
         "value": "1+",
@@ -34,10 +35,6 @@
       "clients": {
         "value": "10+",
         "label": "Khách Hàng Hài Lòng"
-      },
-      "satisfaction": {
-        "value": "100%",
-        "label": "Sự Hài Lòng"
       }
     }
   },
