@@ -186,7 +186,7 @@ export const Projects = () => {
                 return (
                   <motion.div
                     key={project.id}
-                    className="absolute"
+                    className="absolute group/card"
                     initial={false}
                     animate={{
                       x: style.x,
@@ -199,6 +199,7 @@ export const Projects = () => {
                       duration: 0.6,
                       ease: [0.32, 0.72, 0, 1],
                     }}
+                    whileHover={isActive ? { scale: 1.03, z: 50 } : {}}
                     style={{
                       left: "50%",
                       marginLeft: "-140px",
@@ -209,8 +210,8 @@ export const Projects = () => {
                     <div
                       className={`w-[280px] h-[380px] bg-dark-200/80 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-300 ${
                         isActive
-                          ? "border-2 border-primary/50 shadow-2xl shadow-primary/20"
-                          : "border border-white/10"
+                          ? "border-2 border-primary/50 shadow-2xl shadow-primary/20 group-hover/card:shadow-primary/40 group-hover/card:border-primary/70"
+                          : "border border-white/10 group-hover/card:border-white/20"
                       }`}
                       onClick={() => {
                         if (!isActive) {
@@ -220,10 +221,16 @@ export const Projects = () => {
                     >
                       {/* Project Image */}
                       <div className="relative h-44 bg-dark-400 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                        {/* Animated gradient background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 group-hover/card:from-primary/20 group-hover/card:to-secondary/15 transition-all duration-500" />
+
+                        {/* Code icon */}
+                        <div className="absolute inset-0 flex items-center justify-center">
                           <Code2
-                            className={`w-14 h-14 transition-colors duration-300 ${
-                              isActive ? "text-primary/60" : "text-gray-600"
+                            className={`w-14 h-14 transition-all duration-500 group-hover/card:scale-110 group-hover/card:rotate-12 ${
+                              isActive
+                                ? "text-primary/60 group-hover/card:text-primary/80"
+                                : "text-gray-600 group-hover/card:text-gray-500"
                             }`}
                           />
                         </div>
@@ -239,10 +246,15 @@ export const Projects = () => {
                             className="absolute inset-0 bg-gradient-to-br from-primary/90 to-secondary/90 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <span className="bg-white text-dark-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg">
+                            <motion.span
+                              initial={{ y: 20, opacity: 0 }}
+                              whileHover={{ y: 0, opacity: 1 }}
+                              transition={{ duration: 0.3 }}
+                              className="bg-white text-dark-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg"
+                            >
                               {t("projects.viewProject")}
                               <ArrowUpRight className="w-4 h-4" />
-                            </span>
+                            </motion.span>
                           </motion.a>
                         )}
 
@@ -257,30 +269,34 @@ export const Projects = () => {
                       {/* Project Info */}
                       <div className="p-5">
                         <h3
-                          className={`text-base font-bold mb-2 transition-colors duration-300 ${
-                            isActive ? "text-white" : "text-gray-300"
+                          className={`text-base font-bold mb-2 transition-all duration-300 ${
+                            isActive
+                              ? "text-white group-hover/card:text-primary"
+                              : "text-gray-300 group-hover/card:text-white"
                           }`}
                         >
                           {project.title[currentLang]}
                         </h3>
-                        <p className="text-gray-400 text-sm mb-3 leading-relaxed line-clamp-2">
+                        <p className="text-gray-400 text-sm mb-3 leading-relaxed line-clamp-2 group-hover/card:text-gray-300 transition-colors duration-300">
                           {project.description[currentLang]}
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {project.technologies.slice(0, 4).map((tech) => (
-                            <span
+                            <motion.span
                               key={tech}
-                              className={`text-[10px] px-2 py-0.5 rounded-md border transition-colors duration-300 ${
+                              initial={false}
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              className={`text-[10px] px-2 py-0.5 rounded-md border transition-all duration-300 cursor-default ${
                                 isActive
-                                  ? "bg-primary/20 text-primary border-primary/30"
-                                  : "bg-primary/10 text-primary/60 border-primary/15"
+                                  ? "bg-primary/20 text-primary border-primary/30 group-hover/card:bg-primary/30"
+                                  : "bg-primary/10 text-primary/60 border-primary/15 group-hover/card:bg-primary/15"
                               }`}
                             >
                               {tech}
-                            </span>
+                            </motion.span>
                           ))}
                           {project.technologies.length > 4 && (
-                            <span className="text-[10px] px-2 py-0.5 bg-dark-300/50 text-gray-500 rounded-md">
+                            <span className="text-[10px] px-2 py-0.5 bg-dark-300/50 text-gray-500 rounded-md group-hover/card:bg-dark-300/70 transition-colors duration-300">
                               +{project.technologies.length - 4}
                             </span>
                           )}
