@@ -1,75 +1,125 @@
-import { FileCode2, Palette, Code2, Atom, Server, Wind, GitBranch } from 'lucide-react';
-
-export interface Skill {
-  id: string;
+export interface SkillItem {
   name: string;
-  percentage: number;
-  icon: typeof FileCode2;
-  color: string;
+  icon: string;
+  label: string;
+  labelVi: string;
 }
 
-export const skills: Skill[] = [
+export const skills: SkillItem[] = [
+  // Frontend
   {
-    id: 'html',
-    name: 'HTML',
-    percentage: 95,
-    icon: FileCode2,
-    color: '#E34F26',
+    name: "React",
+    icon: "react",
+    label: "Frontend Lib",
+    labelVi: "Thư viện FE",
   },
   {
-    id: 'css',
-    name: 'CSS',
-    percentage: 90,
-    icon: Palette,
-    color: '#1572B6',
+    name: "Next.js",
+    icon: "nextjs",
+    label: "Web Framework",
+    labelVi: "Web Framework",
   },
   {
-    id: 'javascript',
-    name: 'JavaScript',
-    percentage: 90,
-    icon: Code2,
-    color: '#F7DF1E',
+    name: "Tailwind",
+    icon: "tailwind",
+    label: "CSS Framework",
+    labelVi: "CSS Framework",
   },
   {
-    id: 'react',
-    name: 'React.js',
-    percentage: 85,
-    icon: Atom,
-    color: '#61DAFB',
+    name: "JavaScript",
+    icon: "javascript",
+    label: "Language",
+    labelVi: "Ngôn ngữ",
   },
   {
-    id: 'nextjs',
-    name: 'Next.js',
-    percentage: 80,
-    icon: Server,
-    color: '#000000',
+    name: "TypeScript",
+    icon: "typescript",
+    label: "Type Safe",
+    labelVi: "Type Safe",
+  },
+  { name: "HTML", icon: "html", label: "Markup", labelVi: "Markup" },
+  { name: "CSS", icon: "css", label: "Styling", labelVi: "Styling" },
+
+  // Backend & Database
+  { name: "Node.js", icon: "nodejs", label: "Runtime", labelVi: "Runtime" },
+  {
+    name: "Express.js",
+    icon: "express",
+    label: "Backend Framework",
+    labelVi: "Backend Framework",
   },
   {
-    id: 'typescript',
-    name: 'TypeScript',
-    percentage: 85,
-    icon: FileCode2,
-    color: '#3178C6',
+    name: "NestJS",
+    icon: "nestjs",
+    label: "Backend Framework",
+    labelVi: "Backend Framework",
+  },
+  { name: "Java", icon: "java", label: "Language", labelVi: "Ngôn ngữ" },
+  { name: "Python", icon: "python", label: "Language", labelVi: "Ngôn ngữ" },
+  {
+    name: "MongoDB",
+    icon: "mongodb",
+    label: "NoSQL Database",
+    labelVi: "Cơ sở dữ liệu",
+  },
+
+  // DevOps & Tools
+  {
+    name: "Git",
+    icon: "git",
+    label: "Version Control",
+    labelVi: "Quản lý phiên bản",
   },
   {
-    id: 'tailwind',
-    name: 'Tailwind CSS',
-    percentage: 90,
-    icon: Wind,
-    color: '#06B6D4',
+    name: "GitHub",
+    icon: "github",
+    label: "Code Hosting",
+    labelVi: "Lưu trữ code",
+  },
+  { name: "Docker", icon: "docker", label: "Container", labelVi: "Container" },
+  { name: "Nginx", icon: "nginx", label: "Web Server", labelVi: "Web Server" },
+  { name: "Redis", icon: "redis", label: "Cache", labelVi: "Bộ nhớ đệm" },
+  {
+    name: "RabbitMQ",
+    icon: "rabbitmq",
+    label: "Message Broker",
+    labelVi: "Tin nhắn",
   },
   {
-    id: 'nodejs',
-    name: 'Node.js',
-    percentage: 80,
-    icon: Server,
-    color: '#339933',
+    name: "Postman",
+    icon: "postman",
+    label: "API Testing",
+    labelVi: "Kiểm tra API",
   },
   {
-    id: 'git',
-    name: 'Git',
-    percentage: 85,
-    icon: GitBranch,
-    color: '#F05032',
+    name: "Linux",
+    icon: "linux",
+    label: "Operating System",
+    labelVi: "Hệ điều hành",
+  },
+
+  // Database
+  {
+    name: "PostgreSQL",
+    icon: "postgresql",
+    label: "SQL Database",
+    labelVi: "Cơ sở dữ liệu SQL",
+  },
+  {
+    name: "MySQL",
+    icon: "mysql",
+    label: "SQL Database",
+    labelVi: "Cơ sở dữ liệu SQL",
+  },
+
+  // Design
+  {
+    name: "Figma",
+    icon: "figma",
+    label: "UI/UX Design",
+    labelVi: "Thiết kế UI/UX",
   },
 ];
+
+export const getSkillIconUrl = (icon: string) =>
+  `https://skillicons.dev/icons?i=${icon}`;

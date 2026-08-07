@@ -39,8 +39,9 @@
     }
   },
   "skills": {
-    "title": "MY SKILLS",
-    "subtitle": "Technologies I Master"
+    "title": "Technical",
+    "titleHighlight": "Skills",
+    "tableTitle": "TECH STACK"
   },
   "projects": {
     "title": "FEATURED PROJECTS",

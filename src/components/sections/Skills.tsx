@@ -1,59 +1,59 @@
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { skills } from '../../data/skills';
-import { Progress } from '../ui/Progress';
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { skills, getSkillIconUrl } from "../../data/skills";
 
 export const Skills = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEn = i18n.language === "en";
 
   return (
-    <section id="skills" className="scroll-mt-16 py-20 lg:py-32 bg-dark-100/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="skills"
+      className="scroll-mt-16 h-screen flex flex-col justify-center"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-6"
         >
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-full mb-6">
-            <span className="text-primary text-sm font-medium uppercase tracking-wider">
-              {t('skills.title')}
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-2">
+            {t("skills.title")}{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              {t("skills.titleHighlight")}
             </span>
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-white">
-            {t('skills.subtitle')}
           </h2>
         </motion.div>
 
-        {/* Skills List - 3 columns layout like mockup */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-8">
+        {/* Skills Grid */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
           {skills.map((skill, index) => (
             <motion.div
-              key={skill.id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group"
+              key={skill.name}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: index * 0.03 }}
+              whileHover={{ scale: 1.04, y: -4 }}
+              className="group flex flex-col items-center justify-center gap-2 py-4 px-3 rounded-2xl bg-[#0a0a1a] border border-white/[0.06] hover:border-primary/40 transition-all duration-300 cursor-default"
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{ backgroundColor: `${skill.color}20` }}
-                  >
-                    <skill.icon
-                      className="w-5 h-5"
-                      style={{ color: skill.color }}
-                    />
-                  </div>
-                  <span className="text-white font-medium">{skill.name}</span>
-                </div>
-                <span className="text-gray-400 text-sm font-medium">
-                  {skill.percentage}%
-                </span>
+              <img
+                src={getSkillIconUrl(skill.icon)}
+                alt={skill.name}
+                className="w-9 h-9"
+                loading="lazy"
+              />
+              <div className="text-center">
+                <p className="text-[11px] font-semibold text-white group-hover:text-primary transition-colors leading-tight">
+                  {skill.name}
+                </p>
+                <p className="text-[9px] text-gray-500 uppercase tracking-wider mt-0.5">
+                  {isEn ? skill.label : skill.labelVi}
+                </p>
               </div>
-              <Progress percentage={skill.percentage} color={skill.color} />
             </motion.div>
           ))}
         </div>

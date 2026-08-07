@@ -19,7 +19,7 @@
   },
   "about": {
     "title": "Giới Thiệu",
-    "titleHighlight": "Bản Thân",
+    "titleHighlight": "Về Tôi",
     "subtitle": "Sự kết hợp giữa logic mã nguồn và kiến trúc hệ thống bền vững",
     "bio1": "Hành trình của tôi trong lĩnh vực công nghệ bắt đầu từ ghế nhà trường. Là một lập trình viên tự học, tôi quen với việc giải quyết vấn đề một cách độc lập. Đối với tôi, coding là nghệ thuật sắp xếp các logic sống động trên server.",
     "bio2": "Tôi chuyên về phát triển backend, xây dựng API mạnh mẽ, thiết kế kiến trúc cơ sở dữ liệu và triển khai các hệ thống có khả năng mở rộng. Mỗi dòng code tôi viết đều được tạo ra để hiệu quả, dễ bảo trì và sẵn sàng sản xuất.",
@@ -39,8 +39,9 @@
     }
   },
   "skills": {
-    "title": "KỸ NĂNG",
-    "subtitle": "Công Nghệ Tôi Thành Thạo"
+    "title": "Công Nghệ",
+    "titleHighlight": "Sử Dụng",
+    "tableTitle": "CÔNG NGHỆ SỬ DỤNG"
   },
   "projects": {
     "title": "DỰ ÁN NỔI BẬT",
