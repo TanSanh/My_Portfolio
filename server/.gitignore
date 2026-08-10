@@ -19,5 +19,8 @@ Thumbs.db
 # Logs
 *.log
 
+# Uploads
+uploads/
+
 # Misc
 *.local

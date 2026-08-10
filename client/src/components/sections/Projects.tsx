@@ -291,16 +291,24 @@ export const Projects = () => {
                         {/* Animated gradient background */}
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 group-hover/card:from-primary/20 group-hover/card:to-secondary/15 transition-all duration-500" />
 
-                        {/* Code icon */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <Code2
-                            className={`w-14 h-14 transition-all duration-500 group-hover/card:scale-110 group-hover/card:rotate-12 ${
-                              isActive
-                                ? "text-primary/60 group-hover/card:text-primary/80"
-                                : "text-gray-600 group-hover/card:text-gray-500"
-                            }`}
+                        {/* Project Image or Code icon fallback */}
+                        {project.image ? (
+                          <img
+                            src={project.image}
+                            alt={project.title[currentLang]}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110"
                           />
-                        </div>
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Code2
+                              className={`w-14 h-14 transition-all duration-500 group-hover/card:scale-110 group-hover/card:rotate-12 ${
+                                isActive
+                                  ? "text-primary/60 group-hover/card:text-primary/80"
+                                  : "text-gray-600 group-hover/card:text-gray-500"
+                              }`}
+                            />
+                          </div>
+                        )}
 
                         {/* Hover Overlay - Only on active card */}
                         {isActive && (

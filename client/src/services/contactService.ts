@@ -40,6 +40,12 @@ export const contactService = {
     return response.data as ContactMessage;
   },
 
+  // Admin: Mark as unread
+  markAsUnread: async (id: string) => {
+    const response = await api.patch(`/contact/${id}/unread`);
+    return response.data as ContactMessage;
+  },
+
   // Admin: Delete message
   delete: async (id: string) => {
     const response = await api.delete(`/contact/${id}`);

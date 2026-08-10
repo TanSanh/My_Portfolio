@@ -50,6 +50,13 @@ export class ContactController {
     return this.contactService.markAsRead(id);
   }
 
+  // Admin: Mark as unread
+  @Patch(':id/unread')
+  @UseGuards(JwtAuthGuard)
+  markAsUnread(@Param('id') id: string) {
+    return this.contactService.markAsUnread(id);
+  }
+
   // Admin: Delete message
   @Delete(':id')
   @UseGuards(JwtAuthGuard)

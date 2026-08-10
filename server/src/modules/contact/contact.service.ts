@@ -37,6 +37,16 @@ export class ContactService {
     return contact;
   }
 
+  async markAsUnread(id: string): Promise<Contact> {
+    const contact = await this.contactModel
+      .findByIdAndUpdate(id, { read: false }, { new: true })
+      .exec();
+    if (!contact) {
+      throw new NotFoundException('Contact message not found');
+    }
+    return contact;
+  }
+
   async remove(id: string): Promise<void> {
     const result = await this.contactModel.findByIdAndDelete(id).exec();
     if (!result) {
