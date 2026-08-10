@@ -7,7 +7,10 @@ import {
   Phone,
   Send,
   MapPin,
+  CheckCircle,
+  Loader2,
 } from "lucide-react";
+import { contactService } from "../../services/contactService";
 
 export const Contact = () => {
   const { t } = useTranslation();
@@ -17,6 +20,8 @@ export const Contact = () => {
     message: "",
   });
   const [isHovered, setIsHovered] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
   const socialLinks = [
     {
@@ -45,10 +50,21 @@ export const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:hotansanh0304@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)}`;
-    window.location.href = mailtoLink;
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      await contactService.submit(formData);
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -239,13 +255,23 @@ export const Contact = () => {
                   {/* Submit Button */}
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
-                    className="relative overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+                    className="relative overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="relative z-10 flex items-center gap-2">
-                      {t("contact.form.send")}
-                      <Send className="w-4 h-4" />
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          {t("contact.form.sending")}
+                        </>
+                      ) : (
+                        <>
+                          {t("contact.form.send")}
+                          <Send className="w-4 h-4" />
+                        </>
+                      )}
                     </span>
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-secondary to-primary"
@@ -254,6 +280,27 @@ export const Contact = () => {
                       transition={{ duration: 0.3 }}
                     />
                   </button>
+
+                  {/* Success/Error Messages */}
+                  {submitStatus === "success" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center gap-2 text-green-400 text-sm"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      {t("contact.form.success")}
+                    </motion.div>
+                  )}
+                  {submitStatus === "error" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex items-center gap-2 text-red-400 text-sm"
+                    >
+                      {t("contact.form.error")}
+                    </motion.div>
+                  )}
                 </form>
               </motion.div>
             </div>

@@ -1,13 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Code2, ChevronLeft, ChevronRight } from "lucide-react";
-import { projects } from "../../data/projects";
+import { ArrowUpRight, Code2, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { projectService, Project } from "../../services/projectService";
 
 export const Projects = () => {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language as "en" | "vi";
   const [activeIndex, setActiveIndex] = useState(0);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await projectService.getAll();
+        setProjects(data);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        setError("Failed to load projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const totalProjects = projects.length;
 
@@ -133,6 +152,54 @@ export const Projects = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <section
+        id="projects"
+        className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+        style={{ backgroundColor: "#040B1D" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+          <div className="flex items-center justify-center h-[440px]">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section
+        id="projects"
+        className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+        style={{ backgroundColor: "#040B1D" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+          <div className="flex items-center justify-center h-[440px]">
+            <p className="text-red-400">{error}</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (totalProjects === 0) {
+    return (
+      <section
+        id="projects"
+        className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+        style={{ backgroundColor: "#040B1D" }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+          <div className="flex items-center justify-center h-[440px]">
+            <p className="text-gray-400">No projects available</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="projects"
@@ -185,7 +252,7 @@ export const Projects = () => {
 
                 return (
                   <motion.div
-                    key={project.id}
+                    key={project._id}
                     className="absolute group/card"
                     initial={false}
                     animate={{

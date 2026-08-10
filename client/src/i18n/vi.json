@@ -61,7 +61,10 @@
       "emailPlaceholder": "email@gmail.com",
       "message": "Nội dung",
       "messagePlaceholder": "Hãy cho tôi biết về dự án của bạn...",
-      "send": "Gửi Tin Nhắn"
+      "send": "Gửi Tin Nhắn",
+      "sending": "Đang gửi...",
+      "success": "Gửi tin nhắn thành công!",
+      "error": "Gửi tin nhắn thất bại. Vui lòng thử lại."
     }
   },
   "footer": {
