@@ -54,7 +54,7 @@ export const DashboardLayout = () => {
         {/* Logo */}
         <div className="p-6 border-b border-white/5">
           <NavLink to="/admin/dashboard" className="flex items-center gap-2">
-            <Code2 className="w-7 h-7 text-primary" />
+            <img src="/logo.jpg" alt="Logo" className="h-8 w-8 rounded-lg object-cover" />
             <span className="text-xl font-bold text-white">Admin</span>
           </NavLink>
         </div>
@@ -116,7 +116,7 @@ export const DashboardLayout = () => {
                   className="flex items-center gap-2"
                   onClick={() => setSidebarOpen(false)}
                 >
-                  <Code2 className="w-7 h-7 text-primary" />
+                  <img src="/logo.jpg" alt="Logo" className="h-8 w-8 rounded-lg object-cover" />
                   <span className="text-xl font-bold text-white">Admin</span>
                 </NavLink>
                 <button

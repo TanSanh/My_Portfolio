@@ -54,10 +54,10 @@ export const Header = () => {
           {/* Logo */}
           <a
             href="#home"
-            className="flex items-center gap-2 text-white font-bold text-xl"
+            className="flex items-center gap-2"
           >
-            <Code2 className="w-6 h-6 text-primary" />
-            <span>Portfolio</span>
+            <img src="/logo.jpg" alt="Logo" className="h-8 w-8 rounded-lg object-cover" />
+            <span className="text-white font-bold text-xl">Portfolio</span>
           </a>
 
           {/* Desktop Navigation */}
