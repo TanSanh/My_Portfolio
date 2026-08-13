@@ -1,20 +1,14 @@
 import api from './api';
 
 export interface LoginData {
-  username: string;
-  password: string;
-}
-
-export interface RegisterData {
-  username: string;
-  password: string;
   email: string;
+  password: string;
 }
 
 export interface AdminProfile {
   _id: string;
-  username: string;
   email: string;
+  name: string;
   createdAt: string;
 }
 
@@ -27,13 +21,7 @@ export const authService = {
     return response.data;
   },
 
-  // Register
-  register: async (data: RegisterData) => {
-    const response = await api.post('/admin/register', data);
-    const { access_token } = response.data;
-    localStorage.setItem('admin_token', access_token);
-    return response.data;
-  },
+  // NO REGISTER - Admin accounts created via seed script only
 
   // Logout
   logout: () => {
@@ -47,9 +35,18 @@ export const authService = {
   },
 
   // Update profile
-  updateProfile: async (data: { email?: string; username?: string }) => {
+  updateProfile: async (data: { email?: string; name?: string }) => {
     const response = await api.put('/admin/profile', data);
     return response.data as AdminProfile;
+  },
+
+  // Change password
+  changePassword: async (data: {
+    currentPassword: string;
+    newPassword: string;
+  }) => {
+    const response = await api.post('/admin/change-password', data);
+    return response.data;
   },
 
   // Check if logged in

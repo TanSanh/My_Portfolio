@@ -23,11 +23,15 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle 401 errors
+// Response interceptor to handle 401 errors (only for protected routes)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // Only redirect on 401 if it's not a login/register request
+    const isAuthRequest = error.config?.url?.includes('/admin/login') ||
+                          error.config?.url?.includes('/admin/register');
+
+    if (error.response?.status === 401 && !isAuthRequest) {
       localStorage.removeItem('admin_token');
       window.location.href = '/admin';
     }

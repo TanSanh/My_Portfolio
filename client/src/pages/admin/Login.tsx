@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Code2, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Mail, Lock } from "lucide-react";
 import { authService } from "../../services/authService";
 
 export const AdminLogin = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -75,21 +75,25 @@ export const AdminLogin = () => {
                 </motion.div>
               )}
 
-              {/* Username */}
+              {/* Email */}
               <div>
                 <label className="block text-[11px] font-medium text-gray-400 mb-1.5 uppercase tracking-wider">
-                  Username
+                  Email
                 </label>
-                <input
-                  type="text"
-                  value={formData.username}
-                  onChange={(e) =>
-                    setFormData({ ...formData, username: e.target.value })
-                  }
-                  required
-                  className="w-full px-4 py-3 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300"
-                  placeholder="Enter your username"
-                />
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    required
+                    className="w-full pl-10 pr-4 py-3 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300"
+                    placeholder="admin@example.com"
+                    autoComplete="email"
+                  />
+                </div>
               </div>
 
               {/* Password */}
@@ -98,6 +102,7 @@ export const AdminLogin = () => {
                   Password
                 </label>
                 <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
@@ -105,8 +110,9 @@ export const AdminLogin = () => {
                       setFormData({ ...formData, password: e.target.value })
                     }
                     required
-                    className="w-full px-4 py-3 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300 pr-12"
+                    className="w-full pl-10 pr-12 py-3 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300"
                     placeholder="Enter your password"
+                    autoComplete="current-password"
                   />
                   <button
                     type="button"
