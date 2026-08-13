@@ -256,9 +256,9 @@ export const Projects = () => {
               transition={{ delay: index * 0.05 }}
               className="relative rounded-xl p-[1px] bg-gradient-to-br from-white/10 to-white/5 group"
             >
-              <div className="bg-[#0a0a1a] rounded-xl overflow-hidden">
+              <div className="bg-[#0a0a1a] rounded-xl overflow-hidden flex flex-col h-full">
                 {/* Image */}
-                <div className="h-40 bg-dark-300/50 relative overflow-hidden">
+                <div className="h-48 bg-dark-300/50 relative overflow-hidden">
                   {project.image ? (
                     <img
                       src={project.image}
@@ -273,7 +273,7 @@ export const Projects = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-1">
                   <h3 className="text-white font-semibold mb-1 truncate">
                     {project.title.en}
                   </h3>
@@ -298,8 +298,11 @@ export const Projects = () => {
                     )}
                   </div>
 
+                  {/* Spacer */}
+                  <div className="flex-1"></div>
+
                   {/* Actions */}
-                  <div className="flex items-center justify-between pt-3 border-t border-white/5">
+                  <div className="flex items-center justify-between">
                     <div className="flex gap-2">
                       {project.link && (
                         <a
