@@ -5,6 +5,7 @@ import { ContactModule } from './modules/contact/contact.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { EmailModule } from './modules/email/email.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UploadModule } from './modules/upload/upload.module';
     ProjectsModule,
     AdminModule,
     UploadModule,
+    EmailModule,
   ],
 })
 export class AppModule {}

@@ -12,8 +12,11 @@ import {
   Loader2,
   Search,
   RefreshCw,
+  Send,
+  X,
 } from "lucide-react";
 import { contactService } from "../../services/contactService";
+import { emailService } from "../../services/emailService";
 
 interface Contact {
   _id: string;
@@ -31,6 +34,15 @@ export const Contacts = () => {
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
+  const [sending, setSending] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+  const showToast = (message: string, type: "success" | "error") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   useEffect(() => {
     fetchContacts();
@@ -104,6 +116,39 @@ export const Contacts = () => {
       setDeleteConfirm(null);
     } catch (error) {
       console.error("Error deleting contacts:", error);
+    }
+  };
+
+  const openReplyModal = () => {
+    if (selectedContact) {
+      setReplyContent(`Hi ${selectedContact.name},\n\n`);
+      setShowReplyModal(true);
+    }
+  };
+
+  const handleSendReply = async () => {
+    if (!selectedContact || !replyContent.trim()) return;
+
+    setSending(true);
+    try {
+      const result = await emailService.sendReply(
+        selectedContact.email,
+        "Re: Portfolio Contact",
+        replyContent
+      );
+
+      if (result.success) {
+        setShowReplyModal(false);
+        setReplyContent("");
+        showToast("Reply sent successfully!", "success");
+      } else {
+        showToast("Failed to send email. Please try again.", "error");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      showToast("Failed to send email. Please try again.", "error");
+    } finally {
+      setSending(false);
     }
   };
 
@@ -287,9 +332,9 @@ export const Contacts = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
-          className="lg:col-span-2 relative rounded-xl p-[1px] bg-gradient-to-br from-white/10 to-white/5"
+          className="lg:col-span-2 relative rounded-xl p-[1px] bg-gradient-to-br from-white/10 to-white/5 h-fit"
         >
-          <div className="bg-[#0a0a1a] rounded-xl p-6 min-h-[400px]">
+          <div className="bg-[#0a0a1a] rounded-xl p-6">
             {selectedContact ? (
               <div className="space-y-6">
                 {/* Header */}
@@ -363,13 +408,13 @@ export const Contacts = () => {
 
                 {/* Actions */}
                 <div className="flex gap-3">
-                  <a
-                    href={`mailto:${selectedContact.email}?subject=Re: Portfolio Contact&body=Hi ${selectedContact.name},%0A%0A`}
+                  <button
+                    onClick={openReplyModal}
                     className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
                   >
                     <Mail className="w-4 h-4" />
-                    Reply via Email
-                  </a>
+                    Reply
+                  </button>
                 </div>
               </div>
             ) : (
@@ -433,6 +478,118 @@ export const Contacts = () => {
                 </button>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Reply Modal */}
+      <AnimatePresence>
+        {showReplyModal && selectedContact && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4"
+            onClick={() => setShowReplyModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-[#0a0a1a] rounded-xl w-full max-w-lg border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-6 border-b border-white/5">
+                <div>
+                  <h2 className="text-xl font-bold text-white">Reply to</h2>
+                  <p className="text-primary text-sm">{selectedContact.email}</p>
+                </div>
+                <button
+                  onClick={() => setShowReplyModal(false)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-4">
+                {/* Original Message */}
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-400 mb-1.5 uppercase tracking-wider">
+                    Original Message
+                  </label>
+                  <div className="bg-dark-300/50 rounded-lg p-3 border border-white/5">
+                    <p className="text-gray-400 text-sm">{selectedContact.message}</p>
+                  </div>
+                </div>
+
+                {/* Reply Content */}
+                <div>
+                  <label className="block text-[11px] font-medium text-gray-400 mb-1.5 uppercase tracking-wider">
+                    Your Reply
+                  </label>
+                  <textarea
+                    value={replyContent}
+                    onChange={(e) => setReplyContent(e.target.value)}
+                    rows={8}
+                    className="w-full px-4 py-3 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all resize-none"
+                    placeholder="Type your reply..."
+                  />
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex gap-3 justify-end p-6 border-t border-white/5">
+                <button
+                  onClick={() => setShowReplyModal(false)}
+                  className="px-4 py-2 text-gray-400 hover:text-white text-sm transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSendReply}
+                  disabled={!replyContent.trim() || sending}
+                  className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50"
+                >
+                  {sending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Send Reply
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-lg shadow-lg ${
+              toast.type === "success"
+                ? "bg-green-500/90 text-white"
+                : "bg-red-500/90 text-white"
+            }`}
+          >
+            {toast.type === "success" ? (
+              <CheckCircle className="w-5 h-5" />
+            ) : (
+              <XCircle className="w-5 h-5" />
+            )}
+            <span className="text-sm font-medium">{toast.message}</span>
           </motion.div>
         )}
       </AnimatePresence>
