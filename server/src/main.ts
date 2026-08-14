@@ -16,8 +16,13 @@ async function bootstrap() {
   });
 
   // CORS configuration
+  const allowedOrigins: string[] = [
+    'http://localhost:4000',
+    process.env.CLIENT_URL,
+  ].filter((url): url is string => Boolean(url));
+
   app.enableCors({
-    origin: ['http://localhost:4000', 'http://localhost:3000'],
+    origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
