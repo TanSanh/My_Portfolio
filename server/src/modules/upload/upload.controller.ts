@@ -7,16 +7,10 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { memoryStorage } from 'multer';
 import { JwtAuthGuard } from '../admin/guards/jwt-auth.guard';
 import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary } from 'cloudinary';
-
-// Configure Cloudinary
-cloudinary.config({
-  secure: true,
-});
 
 @Controller('upload')
 export class UploadController {
@@ -33,14 +27,7 @@ export class UploadController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './tmp',
-        filename: (req, file, cb) => {
-          const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
-        },
-      }),
+      storage: memoryStorage(),
       limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
       fileFilter: (req, file, cb) => {
         if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp)$/)) {
@@ -52,12 +39,22 @@ export class UploadController {
     }),
   )
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
-    // Upload to Cloudinary using the temp file path
-    const result = await cloudinary.uploader.upload(file.path, {
-      folder: 'portfolio',
-      public_id: `${Date.now()}-${Math.round(Math.random() * 1e9)}`,
-      overwrite: false,
-    });
+    // Upload buffer directly to Cloudinary
+    const result = await new Promise<{ secure_url: string; public_id: string }>(
+      (resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: 'portfolio',
+            public_id: `${Date.now()}-${Math.round(Math.random() * 1e9)}`,
+          },
+          (error, result) => {
+            if (error || !result) return reject(error || new Error('Upload failed'));
+            resolve(result);
+          },
+        );
+        stream.end(file.buffer);
+      },
+    );
 
     return {
       url: result.secure_url,
