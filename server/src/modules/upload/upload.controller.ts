@@ -8,25 +8,33 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname, join } from 'path';
+import { extname } from 'path';
 import { JwtAuthGuard } from '../admin/guards/jwt-auth.guard';
-import { existsSync, mkdirSync } from 'fs';
+import { ConfigService } from '@nestjs/config';
+import { v2 as cloudinary } from 'cloudinary';
 
-const uploadsDir = join(process.cwd(), 'uploads');
-
-// Ensure uploads directory exists
-if (!existsSync(uploadsDir)) {
-  mkdirSync(uploadsDir, { recursive: true });
-}
+// Configure Cloudinary
+cloudinary.config({
+  secure: true,
+});
 
 @Controller('upload')
 export class UploadController {
+  constructor(private configService: ConfigService) {
+    cloudinary.config({
+      cloud_name: this.configService.get<string>('CLOUDINARY_CLOUD_NAME'),
+      api_key: this.configService.get<string>('CLOUDINARY_API_KEY'),
+      api_secret: this.configService.get<string>('CLOUDINARY_API_SECRET'),
+      secure: true,
+    });
+  }
+
   @Post('image')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
-        destination: uploadsDir,
+        destination: './tmp',
         filename: (req, file, cb) => {
           const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -43,10 +51,17 @@ export class UploadController {
       },
     }),
   )
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
+  async uploadImage(@UploadedFile() file: Express.Multer.File) {
+    // Upload to Cloudinary using the temp file path
+    const result = await cloudinary.uploader.upload(file.path, {
+      folder: 'portfolio',
+      public_id: `${Date.now()}-${Math.round(Math.random() * 1e9)}`,
+      overwrite: false,
+    });
+
     return {
-      url: `/uploads/${file.filename}`,
-      filename: file.filename,
+      url: result.secure_url,
+      filename: result.public_id,
       originalname: file.originalname,
       mimetype: file.mimetype,
       size: file.size,

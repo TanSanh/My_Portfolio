@@ -1,13 +1,9 @@
 import { Module } from '@nestjs/common';
-import { MulterModule } from '@nestjs/platform-express';
+import { ConfigModule } from '@nestjs/config';
 import { UploadController } from './upload.controller';
 
 @Module({
-  imports: [
-    MulterModule.register({
-      storage: undefined,
-    }),
-  ],
+  imports: [ConfigModule],
   controllers: [UploadController],
 })
 export class UploadModule {}
