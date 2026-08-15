@@ -11,6 +11,8 @@ import {
   Loader2,
 } from "lucide-react";
 import { contactService } from "../../services/contactService";
+import { AnimatedText } from "../ui/AnimatedText";
+import { Magnetic } from "../ui/Magnetic";
 
 export const Contact = () => {
   const { t } = useTranslation();
@@ -21,7 +23,9 @@ export const Contact = () => {
   });
   const [isHovered, setIsHovered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null,
+  );
 
   const socialLinks = [
     {
@@ -73,6 +77,26 @@ export const Contact = () => {
       className="scroll-mt-16 h-screen flex flex-col justify-center"
       style={{ backgroundColor: "#000612" }}
     >
+      <style>{`
+        @keyframes contact-gradient-flow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .contact-gradient-border {
+          background: linear-gradient(135deg, #8b5cf6, #06b6d4, #8b5cf6, #06b6d4);
+          background-size: 300% 300%;
+          animation: contact-gradient-flow 4s ease infinite;
+        }
+        @keyframes submit-glow {
+          0%, 100% { box-shadow: 0 0 10px rgba(139, 92, 246, 0.3); }
+          50% { box-shadow: 0 0 25px rgba(139, 92, 246, 0.6); }
+        }
+        .submit-glow:hover {
+          animation: submit-glow 2s ease-in-out infinite;
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
         {/* Section Header */}
         <motion.div
@@ -83,20 +107,20 @@ export const Contact = () => {
           className="text-center mb-10"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-1">
-            {t("contact.title")}{" "}
+            <AnimatedText text={t("contact.title") + " "} />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              {t("contact.titleHighlight")}
+              <AnimatedText text={t("contact.titleHighlight")} delay={0.3} />
             </span>
           </h2>
         </motion.div>
 
-        {/* Contact Card */}
+        {/* Contact Card with Animated Gradient Border */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative rounded-2xl p-[1px] bg-gradient-to-br from-primary/40 via-secondary/20 to-primary/40"
+          className="relative rounded-2xl p-[1.5px] contact-gradient-border"
         >
           <div className="bg-[#0a0a1a] rounded-2xl p-6 lg:p-8">
             <div className="grid lg:grid-cols-2 gap-8">
@@ -135,18 +159,22 @@ export const Contact = () => {
                     href="mailto:hotansanh0304@gmail.com"
                     className="flex items-center gap-3 text-gray-400 hover:text-white transition-all duration-300 group"
                   >
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
-                      <Mail className="w-4 h-4 text-primary" />
-                    </div>
+                    <Magnetic strength={0.2}>
+                      <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 group-hover:shadow-lg group-hover:shadow-primary/10 transition-all duration-300">
+                        <Mail className="w-4 h-4 text-primary" />
+                      </div>
+                    </Magnetic>
                     <span className="text-sm">hotansanh0304@gmail.com</span>
                   </a>
                   <a
                     href="tel:0779518027"
                     className="flex items-center gap-3 text-gray-400 hover:text-white transition-all duration-300 group"
                   >
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
-                      <Phone className="w-4 h-4 text-primary" />
-                    </div>
+                    <Magnetic strength={0.2}>
+                      <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 group-hover:shadow-lg group-hover:shadow-primary/10 transition-all duration-300">
+                        <Phone className="w-4 h-4 text-primary" />
+                      </div>
+                    </Magnetic>
                     <span className="text-sm">0779 518 027</span>
                   </a>
                   <div className="flex items-center gap-3 text-gray-400">
@@ -157,7 +185,7 @@ export const Contact = () => {
                   </div>
                 </motion.div>
 
-                {/* Social Links */}
+                {/* Social Links with Magnetic effect */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -169,25 +197,37 @@ export const Contact = () => {
                   </p>
                   <div className="flex gap-2.5">
                     {socialLinks.map((link) => (
-                      <motion.a
-                        key={link.label}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className="w-10 h-10 rounded-xl bg-dark-200 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300"
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = link.color + "60";
-                          e.currentTarget.style.color = link.color;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = "";
-                          e.currentTarget.style.color = "";
-                        }}
-                        aria-label={link.label}
-                      >
-                        <img src={link.iconUrl} className="w-5 h-5" alt={link.label} />
-                      </motion.a>
+                      <Magnetic key={link.label} strength={0.3}>
+                        <motion.a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{
+                            scale: 1.1,
+                            y: -3,
+                            transition: { duration: 0.2 },
+                          }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-10 h-10 rounded-xl bg-dark-200 border border-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 hover:shadow-lg"
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = link.color + "60";
+                            e.currentTarget.style.color = link.color;
+                            e.currentTarget.style.boxShadow = `0 0 15px ${link.color}30`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "";
+                            e.currentTarget.style.color = "";
+                            e.currentTarget.style.boxShadow = "";
+                          }}
+                          aria-label={link.label}
+                        >
+                          <img
+                            src={link.iconUrl}
+                            className="w-5 h-5"
+                            alt={link.label}
+                          />
+                        </motion.a>
+                      </Magnetic>
                     ))}
                   </div>
                 </motion.div>
@@ -215,7 +255,7 @@ export const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 py-2.5 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300"
+                      className="w-full px-3 py-2.5 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:shadow-lg focus:shadow-primary/5 transition-all duration-300"
                       placeholder={t("contact.form.namePlaceholder")}
                     />
                   </div>
@@ -231,7 +271,7 @@ export const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 py-2.5 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300"
+                      className="w-full px-3 py-2.5 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:shadow-lg focus:shadow-primary/5 transition-all duration-300"
                       placeholder={t("contact.form.emailPlaceholder")}
                     />
                   </div>
@@ -247,45 +287,48 @@ export const Contact = () => {
                       onChange={handleChange}
                       required
                       rows={3}
-                      className="w-full px-3 py-2.5 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 transition-all duration-300 resize-none"
+                      className="w-full px-3 py-2.5 bg-dark-300/50 border border-white/5 rounded-lg text-white text-sm placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:shadow-lg focus:shadow-primary/5 transition-all duration-300 resize-none"
                       placeholder={t("contact.form.messagePlaceholder")}
                     />
                   </div>
 
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                    className="relative overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="relative z-10 flex items-center gap-2">
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          {t("contact.form.sending")}
-                        </>
-                      ) : (
-                        <>
-                          {t("contact.form.send")}
-                          <Send className="w-4 h-4" />
-                        </>
-                      )}
-                    </span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-secondary to-primary"
-                      initial={{ x: "100%" }}
-                      animate={{ x: isHovered ? "0%" : "100%" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </button>
+                  {/* Submit Button with glow */}
+                  <Magnetic strength={0.15}>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                      className="submit-glow relative overflow-hidden flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-secondary text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed w-full"
+                    >
+                      <span className="relative z-10 flex items-center gap-2">
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            {t("contact.form.sending")}
+                          </>
+                        ) : (
+                          <>
+                            {t("contact.form.send")}
+                            <Send className="w-4 h-4" />
+                          </>
+                        )}
+                      </span>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-secondary to-primary"
+                        initial={{ x: "100%" }}
+                        animate={{ x: isHovered ? "0%" : "100%" }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </button>
+                  </Magnetic>
 
                   {/* Success/Error Messages */}
                   {submitStatus === "success" && (
                     <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.3 }}
                       className="flex items-center gap-2 text-green-400 text-sm"
                     >
                       <CheckCircle className="w-4 h-4" />
@@ -294,8 +337,9 @@ export const Contact = () => {
                   )}
                   {submitStatus === "error" && (
                     <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.3 }}
                       className="flex items-center gap-2 text-red-400 text-sm"
                     >
                       {t("contact.form.error")}

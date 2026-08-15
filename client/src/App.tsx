@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Routes, Route } from "react-router-dom";
+import Lenis from "lenis";
 import i18n from "./i18n";
 import { Layout } from "./components/layout/Layout";
 import { Hero } from "./components/sections/Hero";
@@ -14,6 +16,24 @@ import { Contacts } from "./pages/admin/Contacts";
 import { Projects as AdminProjects } from "./pages/admin/Projects";
 
 function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <I18nextProvider i18n={i18n}>
       <Routes>

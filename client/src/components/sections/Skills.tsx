@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { skills, getSkillIconUrl } from "../../data/skills";
+import { AnimatedText } from "../ui/AnimatedText";
+import { Magnetic } from "../ui/Magnetic";
 
 export const Skills = () => {
   const { t, i18n } = useTranslation();
@@ -12,6 +14,16 @@ export const Skills = () => {
       className="scroll-mt-16 h-screen flex flex-col justify-center"
       style={{ backgroundColor: "#000612" }}
     >
+      <style>{`
+        @keyframes glow-pulse {
+          0%, 100% { box-shadow: 0 0 5px rgba(139, 92, 246, 0.3), 0 0 10px rgba(139, 92, 246, 0.1); }
+          50% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.5), 0 0 30px rgba(139, 92, 246, 0.2); }
+        }
+        .skill-glow:hover {
+          animation: glow-pulse 2s ease-in-out infinite;
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
         {/* Section Header */}
         <motion.div
@@ -22,9 +34,9 @@ export const Skills = () => {
           className="text-center mb-6"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-2">
-            {t("skills.title")}{" "}
+            <AnimatedText text={t("skills.title") + " "} />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              {t("skills.titleHighlight")}
+              <AnimatedText text={t("skills.titleHighlight")} delay={0.3} />
             </span>
           </h2>
         </motion.div>
@@ -32,30 +44,50 @@ export const Skills = () => {
         {/* Skills Grid */}
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
           {skills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: index * 0.03 }}
-              whileHover={{ scale: 1.04, y: -4 }}
-              className="group flex flex-col items-center justify-center gap-2 py-4 px-3 rounded-2xl bg-[#0a0a1a] border border-white/[0.06] hover:border-primary/40 transition-all duration-300 cursor-default"
-            >
-              <img
-                src={getSkillIconUrl(skill.icon)}
-                alt={skill.name}
-                className="w-9 h-9"
-                loading="lazy"
-              />
-              <div className="text-center">
-                <p className="text-[11px] font-semibold text-white group-hover:text-primary transition-colors leading-tight">
-                  {skill.name}
-                </p>
-                <p className="text-[9px] text-gray-500 uppercase tracking-wider mt-0.5">
-                  {isEn ? skill.label : skill.labelVi}
-                </p>
-              </div>
-            </motion.div>
+            <Magnetic key={skill.name} strength={0.15}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.04,
+                  ease: [0.33, 1, 0.68, 1],
+                }}
+                whileHover={{
+                  scale: 1.06,
+                  y: -6,
+                  transition: { duration: 0.25 },
+                }}
+                whileTap={{ scale: 0.98 }}
+                className="skill-glow group flex flex-col items-center justify-center gap-2 py-4 px-3 rounded-2xl bg-[#0a0a1a] border border-white/[0.06] hover:border-primary/50 transition-all duration-300 cursor-default relative overflow-hidden"
+              >
+                {/* Hover glow background */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
+
+                {/* Icon */}
+                <motion.img
+                  src={getSkillIconUrl(skill.icon)}
+                  alt={skill.name}
+                  className="w-9 h-9 relative z-10"
+                  loading="lazy"
+                  whileHover={{
+                    rotate: [0, -5, 5, -5, 0],
+                    transition: { duration: 0.4 },
+                  }}
+                />
+
+                {/* Text */}
+                <div className="text-center relative z-10">
+                  <p className="text-[11px] font-semibold text-white group-hover:text-primary transition-colors duration-300 leading-tight">
+                    {skill.name}
+                  </p>
+                  <p className="text-[9px] text-gray-500 uppercase tracking-wider mt-0.5 group-hover:text-gray-400 transition-colors duration-300">
+                    {isEn ? skill.label : skill.labelVi}
+                  </p>
+                </div>
+              </motion.div>
+            </Magnetic>
           ))}
         </div>
       </div>
