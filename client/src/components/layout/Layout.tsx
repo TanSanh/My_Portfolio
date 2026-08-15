@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen bg-dark-300">
+    <div className="min-h-screen bg-dark-300 overflow-x-hidden">
       <Header />
       <main className="pt-16">
         {children}

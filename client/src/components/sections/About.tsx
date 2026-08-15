@@ -30,7 +30,7 @@ export const About = () => {
   return (
     <section
       id="about"
-      className="scroll-mt-16 h-screen flex flex-col justify-center"
+      className="scroll-mt-16 min-h-screen flex flex-col justify-center"
       style={{ backgroundColor: "#040B1D" }}
     >
       {/* CSS Keyframes for swinging animation */}
@@ -69,9 +69,9 @@ export const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-20 -mt-20"
+          className="text-center mb-6 sm:mb-20"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             <AnimatedText text={t("about.title") + " "} />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               <AnimatedText text={t("about.titleHighlight")} delay={0.3} />
@@ -87,8 +87,8 @@ export const About = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative rounded-3xl p-[1.5px] animated-gradient-border"
         >
-          <div className="bg-[#0a0a1a] rounded-3xl p-6 lg:p-10">
-            <div className="grid lg:grid-cols-[30%_70%] gap-8 items-center">
+          <div className="bg-[#0a0a1a] rounded-3xl p-4 sm:p-6 lg:p-10">
+            <div className="grid lg:grid-cols-[30%_70%] gap-6 lg:gap-8 items-center">
               {/* Left - Profile Image with Hanging Ribbon Effect */}
               <div className="flex justify-center lg:justify-start">
                 <div className="relative">
@@ -165,7 +165,7 @@ export const About = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
-                      className="relative mt-0 w-52 h-64 rounded-2xl overflow-visible shadow-2xl"
+                      className="relative mt-0 w-40 h-52 sm:w-52 sm:h-64 rounded-2xl overflow-visible shadow-2xl"
                     >
                       {/* Hole/Punch at top of photo */}
                       <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
@@ -228,7 +228,7 @@ export const About = () => {
                 </motion.p>
 
                 {/* Stats with Counter Animation */}
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4">
                   {stats.map((stat, index) => (
                     <motion.div
                       key={stat.label}
@@ -238,14 +238,14 @@ export const About = () => {
                       transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
                       className="text-center lg:text-left"
                     >
-                      <div className="text-3xl lg:text-4xl font-bold text-green-400 mb-1">
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-400 mb-1">
                         <Counter
                           target={stat.numValue}
                           suffix={stat.suffix}
                           duration={2}
                         />
                       </div>
-                      <div className="text-gray-500 text-[10px] uppercase tracking-wider">
+                      <div className="text-gray-500 text-[8px] sm:text-[10px] uppercase tracking-wider">
                         {stat.label}
                       </div>
                     </motion.div>

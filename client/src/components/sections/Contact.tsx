@@ -74,7 +74,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="scroll-mt-16 h-screen flex flex-col justify-center"
+      className="scroll-mt-16 min-h-screen flex flex-col justify-center"
       style={{ backgroundColor: "#000612" }}
     >
       <style>{`
@@ -106,7 +106,7 @@ export const Contact = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-1">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1">
             <AnimatedText text={t("contact.title") + " "} />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               <AnimatedText text={t("contact.titleHighlight")} delay={0.3} />
@@ -122,8 +122,8 @@ export const Contact = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="relative rounded-2xl p-[1.5px] contact-gradient-border"
         >
-          <div className="bg-[#0a0a1a] rounded-2xl p-6 lg:p-8">
-            <div className="grid lg:grid-cols-2 gap-8">
+          <div className="bg-[#0a0a1a] rounded-2xl p-4 sm:p-6 lg:p-8">
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
               {/* Left - Info */}
               <div className="flex flex-col justify-between">
                 <div>
@@ -153,7 +153,7 @@ export const Contact = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.4 }}
-                  className="space-y-3 mb-5"
+                  className="space-y-2.5 sm:space-y-3 mb-4 sm:mb-5"
                 >
                   <a
                     href="mailto:hotansanh0304@gmail.com"
@@ -242,7 +242,7 @@ export const Contact = () => {
               >
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-dark-200/30 backdrop-blur-sm rounded-xl border border-white/5 p-5 space-y-4"
+                  className="bg-dark-200/30 backdrop-blur-sm rounded-xl border border-white/5 p-4 sm:p-5 space-y-3 sm:space-y-4"
                 >
                   {/* Name */}
                   <div>

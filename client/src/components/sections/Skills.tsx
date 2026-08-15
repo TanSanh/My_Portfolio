@@ -11,7 +11,7 @@ export const Skills = () => {
   return (
     <section
       id="skills"
-      className="scroll-mt-16 h-screen flex flex-col justify-center"
+      className="scroll-mt-16 min-h-screen flex flex-col justify-center"
       style={{ backgroundColor: "#000612" }}
     >
       <style>{`
@@ -31,9 +31,9 @@ export const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-6"
+          className="text-center mb-4 sm:mb-6"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">
             <AnimatedText text={t("skills.title") + " "} />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               <AnimatedText text={t("skills.titleHighlight")} delay={0.3} />
@@ -42,7 +42,7 @@ export const Skills = () => {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2 sm:gap-3">
           {skills.map((skill, index) => (
             <Magnetic key={skill.name} strength={0.15}>
               <motion.div
@@ -60,7 +60,7 @@ export const Skills = () => {
                   transition: { duration: 0.25 },
                 }}
                 whileTap={{ scale: 0.98 }}
-                className="skill-glow group flex flex-col items-center justify-center gap-2 py-4 px-3 rounded-2xl bg-[#0a0a1a] border border-white/[0.06] hover:border-primary/50 transition-all duration-300 cursor-default relative overflow-hidden"
+                className="skill-glow group flex flex-col items-center justify-center gap-1.5 sm:gap-2 py-3 sm:py-4 px-2 sm:px-3 rounded-2xl bg-[#0a0a1a] border border-white/[0.06] hover:border-primary/50 transition-all duration-300 cursor-default relative overflow-hidden"
               >
                 {/* Hover glow background */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
@@ -69,7 +69,7 @@ export const Skills = () => {
                 <motion.img
                   src={getSkillIconUrl(skill.icon)}
                   alt={skill.name}
-                  className="w-9 h-9 relative z-10"
+                  className="w-7 h-7 sm:w-9 sm:h-9 relative z-10"
                   loading="lazy"
                   whileHover={{
                     rotate: [0, -5, 5, -5, 0],

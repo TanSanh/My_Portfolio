@@ -40,11 +40,19 @@
     background-color: #010715;
     color: #e2e8f0;
     line-height: 1.6;
+    overflow-x: hidden;
   }
 
   ::selection {
     background-color: #8b5cf6;
     color: white;
+  }
+
+  /* Mobile viewport fix - account for browser chrome */
+  @supports (height: 100dvh) {
+    section {
+      min-height: 100dvh;
+    }
   }
 }
 

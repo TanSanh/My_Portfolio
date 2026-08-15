@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code2, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
@@ -12,6 +12,16 @@ export const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -39,7 +49,7 @@ export const Projects = () => {
     setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
   };
 
-  const getCardStyle = (index: number) => {
+  const getCardStyle = useCallback((index: number) => {
     const offset = index - activeIndex;
     const normalizedOffset =
       (offset + totalProjects) % totalProjects > totalProjects / 2
@@ -47,6 +57,9 @@ export const Projects = () => {
         : (offset + totalProjects) % totalProjects;
 
     const show5Cards = totalProjects >= 5;
+
+    // Responsive multiplier for mobile
+    const m = isMobile ? 0.5 : 1;
 
     if (normalizedOffset === 0) {
       return {
@@ -60,43 +73,43 @@ export const Projects = () => {
     } else if (show5Cards) {
       if (normalizedOffset === -1) {
         return {
-          x: -280,
+          x: -280 * m,
           z: -150,
           rotateY: 25,
-          scale: 0.85,
+          scale: isMobile ? 0.75 : 0.85,
           opacity: 0.85,
           zIndex: 8,
         };
       } else if (normalizedOffset === 1) {
         return {
-          x: 280,
+          x: 280 * m,
           z: -150,
           rotateY: -25,
-          scale: 0.85,
+          scale: isMobile ? 0.75 : 0.85,
           opacity: 0.85,
           zIndex: 8,
         };
       } else if (normalizedOffset === -2) {
         return {
-          x: -480,
+          x: -480 * m,
           z: -300,
           rotateY: 40,
-          scale: 0.7,
-          opacity: 0.5,
+          scale: isMobile ? 0.6 : 0.7,
+          opacity: isMobile ? 0.3 : 0.5,
           zIndex: 6,
         };
       } else if (normalizedOffset === 2) {
         return {
-          x: 480,
+          x: 480 * m,
           z: -300,
           rotateY: -40,
-          scale: 0.7,
-          opacity: 0.5,
+          scale: isMobile ? 0.6 : 0.7,
+          opacity: isMobile ? 0.3 : 0.5,
           zIndex: 6,
         };
       } else {
         return {
-          x: normalizedOffset > 0 ? 700 : -700,
+          x: normalizedOffset > 0 ? 700 * m : -700 * m,
           z: -500,
           rotateY: normalizedOffset > 0 ? -45 : 45,
           scale: 0.5,
@@ -110,10 +123,10 @@ export const Projects = () => {
         (normalizedOffset === totalProjects - 1 && totalProjects <= 3)
       ) {
         return {
-          x: -300,
+          x: -300 * m,
           z: -200,
           rotateY: 30,
-          scale: 0.82,
+          scale: isMobile ? 0.72 : 0.82,
           opacity: 0.75,
           zIndex: 5,
         };
@@ -122,16 +135,16 @@ export const Projects = () => {
         (normalizedOffset === -(totalProjects - 1) && totalProjects <= 3)
       ) {
         return {
-          x: 300,
+          x: 300 * m,
           z: -200,
           rotateY: -30,
-          scale: 0.82,
+          scale: isMobile ? 0.72 : 0.82,
           opacity: 0.75,
           zIndex: 5,
         };
       } else {
         return {
-          x: normalizedOffset > 0 ? 600 : -600,
+          x: normalizedOffset > 0 ? 600 * m : -600 * m,
           z: -400,
           rotateY: normalizedOffset > 0 ? -45 : 45,
           scale: 0.6,
@@ -140,13 +153,13 @@ export const Projects = () => {
         };
       }
     }
-  };
+  }, [activeIndex, totalProjects, isMobile]);
 
   if (loading) {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+        className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
@@ -162,7 +175,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+        className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
@@ -178,7 +191,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+        className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
@@ -193,7 +206,7 @@ export const Projects = () => {
   return (
     <section
       id="projects"
-      className="scroll-mt-16 h-screen flex flex-col justify-center overflow-hidden"
+      className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
       style={{ backgroundColor: "#040B1D" }}
     >
       <style>{`
@@ -216,7 +229,7 @@ export const Projects = () => {
           className="text-center mb-6"
         >
           <motion.h2
-            className="text-4xl lg:text-5xl font-bold text-white mb-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -238,7 +251,7 @@ export const Projects = () => {
 
         {/* Coverflow Carousel */}
         <div
-          className="relative h-[440px] flex items-center justify-center"
+          className="relative h-[320px] sm:h-[440px] flex items-center justify-center"
           style={{ perspective: "1200px" }}
         >
           {/* Cards Container */}
@@ -270,13 +283,13 @@ export const Projects = () => {
                     whileHover={isActive ? { scale: 1.03, z: 50 } : {}}
                     style={{
                       left: "50%",
-                      marginLeft: "-140px",
+                      marginLeft: isMobile ? "-120px" : "-140px",
                       transformStyle: "preserve-3d",
                       zIndex: style.zIndex,
                     }}
                   >
                     <div
-                      className={`w-[280px] h-[380px] bg-dark-200/80 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-300 ${
+                      className={`w-[240px] sm:w-[280px] h-[320px] sm:h-[380px] bg-dark-200/80 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-300 ${
                         isActive
                           ? "border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20 group-hover/card:shadow-cyan-500/40 group-hover/card:border-cyan-500/70"
                           : "border border-white/10 group-hover/card:border-white/20"
@@ -288,7 +301,7 @@ export const Projects = () => {
                       }}
                     >
                       {/* Project Image */}
-                      <div className="relative h-44 bg-dark-400 overflow-hidden">
+                      <div className="relative h-36 sm:h-44 bg-dark-400 overflow-hidden">
                         {/* Project Image or Code icon fallback */}
                         {project.image ? (
                           <img
@@ -325,9 +338,9 @@ export const Projects = () => {
                       </div>
 
                       {/* Project Info */}
-                      <div className="p-5">
+                      <div className="p-3 sm:p-5">
                         <h3
-                          className={`text-base font-bold mb-2 transition-all duration-300 ${
+                          className={`text-sm sm:text-base font-bold mb-1 sm:mb-2 transition-all duration-300 ${
                             isActive
                               ? "text-white group-hover/card:text-primary"
                               : "text-gray-300 group-hover/card:text-white"
@@ -335,7 +348,7 @@ export const Projects = () => {
                         >
                           {project.title[currentLang]}
                         </h3>
-                        <p className="text-gray-400 text-sm mb-3 leading-relaxed line-clamp-2 group-hover/card:text-gray-300 transition-colors duration-300">
+                        <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed line-clamp-2 group-hover/card:text-gray-300 transition-colors duration-300">
                           {project.description[currentLang]}
                         </p>
                         <div className="flex flex-wrap gap-1.5">
@@ -372,18 +385,18 @@ export const Projects = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={handlePrev}
-            className="absolute left-4 lg:left-8 z-30 w-12 h-12 rounded-full bg-dark-200/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300"
+            className="absolute left-2 sm:left-4 lg:left-8 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-dark-200/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </motion.button>
 
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleNext}
-            className="absolute right-4 lg:right-8 z-30 w-12 h-12 rounded-full bg-dark-200/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300"
+            className="absolute right-2 sm:right-4 lg:right-8 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-dark-200/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </motion.button>
         </div>
 
