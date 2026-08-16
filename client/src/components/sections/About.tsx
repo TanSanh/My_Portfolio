@@ -30,7 +30,7 @@ export const About = () => {
   return (
     <section
       id="about"
-      className="scroll-mt-16 min-h-screen flex flex-col justify-center"
+      className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden"
       style={{ backgroundColor: "#040B1D" }}
     >
       {/* CSS Keyframes for swinging animation */}
@@ -69,11 +69,11 @@ export const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-6 sm:mb-20"
+          className="text-center mb-4 sm:mb-8"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             <AnimatedText text={t("about.title") + " "} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               <AnimatedText text={t("about.titleHighlight")} delay={0.3} />
             </span>
           </h2>

@@ -47,13 +47,6 @@
     background-color: #8b5cf6;
     color: white;
   }
-
-  /* Mobile viewport fix - account for browser chrome */
-  @supports (height: 100dvh) {
-    section {
-      min-height: 100dvh;
-    }
-  }
 }
 
 @layer utilities {

@@ -74,7 +74,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="scroll-mt-16 min-h-screen flex flex-col justify-center"
+      className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden"
       style={{ backgroundColor: "#000612" }}
     >
       <style>{`
@@ -97,18 +97,18 @@ export const Contact = () => {
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-4 sm:mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             <AnimatedText text={t("contact.title") + " "} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               <AnimatedText text={t("contact.titleHighlight")} delay={0.3} />
             </span>
           </h2>

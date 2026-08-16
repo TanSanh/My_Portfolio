@@ -159,10 +159,10 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
+        className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
           <div className="flex items-center justify-center h-[440px]">
             <Loader2 className="w-8 h-8 text-primary animate-spin" />
           </div>
@@ -175,10 +175,10 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
+        className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
           <div className="flex items-center justify-center h-[440px]">
             <p className="text-red-400">{error}</p>
           </div>
@@ -191,10 +191,10 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
+        className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
           <div className="flex items-center justify-center h-[440px]">
             <p className="text-gray-400">No projects available</p>
           </div>
@@ -206,7 +206,7 @@ export const Projects = () => {
   return (
     <section
       id="projects"
-      className="scroll-mt-16 min-h-screen flex flex-col justify-center overflow-hidden"
+      className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
       style={{ backgroundColor: "#040B1D" }}
     >
       <style>{`
@@ -219,24 +219,24 @@ export const Projects = () => {
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-4 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-6"
+          className="text-center mb-4 sm:mb-8"
         >
           <motion.h2
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <AnimatedText text={t("projects.title") + " "} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
               <AnimatedText text={t("projects.titleHighlight")} delay={0.3} />
             </span>
           </motion.h2>
