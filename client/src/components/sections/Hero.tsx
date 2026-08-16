@@ -125,7 +125,7 @@ export const Hero = () => {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-3 leading-tight">
               <AnimatedText text={t("hero.greeting")} delay={0.2} />
               <br />
-              <span className="text-gradient">
+              <span className="inline-block text-gradient">
                 <AnimatedText text={t("hero.name")} delay={0.4} />
               </span>
             </h1>
