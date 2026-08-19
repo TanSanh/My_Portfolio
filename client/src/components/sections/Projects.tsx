@@ -1,7 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import {
+  Code2,
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+  ExternalLink,
+} from "lucide-react";
 import { projectService, Project } from "../../services/projectService";
 import { AnimatedText } from "../ui/AnimatedText";
 
@@ -49,117 +55,120 @@ export const Projects = () => {
     setActiveIndex((prev) => (prev - 1 + totalProjects) % totalProjects);
   };
 
-  const getCardStyle = useCallback((index: number) => {
-    const offset = index - activeIndex;
-    const normalizedOffset =
-      (offset + totalProjects) % totalProjects > totalProjects / 2
-        ? ((offset + totalProjects) % totalProjects) - totalProjects
-        : (offset + totalProjects) % totalProjects;
+  const getCardStyle = useCallback(
+    (index: number) => {
+      const offset = index - activeIndex;
+      const normalizedOffset =
+        (offset + totalProjects) % totalProjects > totalProjects / 2
+          ? ((offset + totalProjects) % totalProjects) - totalProjects
+          : (offset + totalProjects) % totalProjects;
 
-    const show5Cards = totalProjects >= 5;
+      const show5Cards = totalProjects >= 5;
 
-    // Responsive multiplier for mobile
-    const m = isMobile ? 0.5 : 1;
+      // Responsive multiplier for mobile
+      const m = isMobile ? 0.5 : 1;
 
-    if (normalizedOffset === 0) {
-      return {
-        x: 0,
-        z: 0,
-        rotateY: 0,
-        scale: 1,
-        opacity: 1,
-        zIndex: 10,
-      };
-    } else if (show5Cards) {
-      if (normalizedOffset === -1) {
+      if (normalizedOffset === 0) {
         return {
-          x: -280 * m,
-          z: -150,
-          rotateY: 25,
-          scale: isMobile ? 0.75 : 0.85,
-          opacity: 0.85,
-          zIndex: 8,
+          x: 0,
+          z: 0,
+          rotateY: 0,
+          scale: 1,
+          opacity: 1,
+          zIndex: 10,
         };
-      } else if (normalizedOffset === 1) {
-        return {
-          x: 280 * m,
-          z: -150,
-          rotateY: -25,
-          scale: isMobile ? 0.75 : 0.85,
-          opacity: 0.85,
-          zIndex: 8,
-        };
-      } else if (normalizedOffset === -2) {
-        return {
-          x: -480 * m,
-          z: -300,
-          rotateY: 40,
-          scale: isMobile ? 0.6 : 0.7,
-          opacity: isMobile ? 0.3 : 0.5,
-          zIndex: 6,
-        };
-      } else if (normalizedOffset === 2) {
-        return {
-          x: 480 * m,
-          z: -300,
-          rotateY: -40,
-          scale: isMobile ? 0.6 : 0.7,
-          opacity: isMobile ? 0.3 : 0.5,
-          zIndex: 6,
-        };
+      } else if (show5Cards) {
+        if (normalizedOffset === -1) {
+          return {
+            x: -280 * m,
+            z: -150,
+            rotateY: 25,
+            scale: isMobile ? 0.75 : 0.85,
+            opacity: 0.95,
+            zIndex: 8,
+          };
+        } else if (normalizedOffset === 1) {
+          return {
+            x: 280 * m,
+            z: -150,
+            rotateY: -25,
+            scale: isMobile ? 0.75 : 0.85,
+            opacity: 0.95,
+            zIndex: 8,
+          };
+        } else if (normalizedOffset === -2) {
+          return {
+            x: -480 * m,
+            z: -300,
+            rotateY: 40,
+            scale: isMobile ? 0.6 : 0.7,
+            opacity: isMobile ? 0.5 : 0.7,
+            zIndex: 6,
+          };
+        } else if (normalizedOffset === 2) {
+          return {
+            x: 480 * m,
+            z: -300,
+            rotateY: -40,
+            scale: isMobile ? 0.6 : 0.7,
+            opacity: isMobile ? 0.5 : 0.7,
+            zIndex: 6,
+          };
+        } else {
+          return {
+            x: normalizedOffset > 0 ? 700 * m : -700 * m,
+            z: -500,
+            rotateY: normalizedOffset > 0 ? -45 : 45,
+            scale: 0.5,
+            opacity: 0,
+            zIndex: 1,
+          };
+        }
       } else {
-        return {
-          x: normalizedOffset > 0 ? 700 * m : -700 * m,
-          z: -500,
-          rotateY: normalizedOffset > 0 ? -45 : 45,
-          scale: 0.5,
-          opacity: 0,
-          zIndex: 1,
-        };
+        if (
+          normalizedOffset === -1 ||
+          (normalizedOffset === totalProjects - 1 && totalProjects <= 3)
+        ) {
+          return {
+            x: -300 * m,
+            z: -200,
+            rotateY: 30,
+            scale: isMobile ? 0.72 : 0.82,
+            opacity: 0.9,
+            zIndex: 5,
+          };
+        } else if (
+          normalizedOffset === 1 ||
+          (normalizedOffset === -(totalProjects - 1) && totalProjects <= 3)
+        ) {
+          return {
+            x: 300 * m,
+            z: -200,
+            rotateY: -30,
+            scale: isMobile ? 0.72 : 0.82,
+            opacity: 0.9,
+            zIndex: 5,
+          };
+        } else {
+          return {
+            x: normalizedOffset > 0 ? 600 * m : -600 * m,
+            z: -400,
+            rotateY: normalizedOffset > 0 ? -45 : 45,
+            scale: 0.6,
+            opacity: 0,
+            zIndex: 1,
+          };
+        }
       }
-    } else {
-      if (
-        normalizedOffset === -1 ||
-        (normalizedOffset === totalProjects - 1 && totalProjects <= 3)
-      ) {
-        return {
-          x: -300 * m,
-          z: -200,
-          rotateY: 30,
-          scale: isMobile ? 0.72 : 0.82,
-          opacity: 0.75,
-          zIndex: 5,
-        };
-      } else if (
-        normalizedOffset === 1 ||
-        (normalizedOffset === -(totalProjects - 1) && totalProjects <= 3)
-      ) {
-        return {
-          x: 300 * m,
-          z: -200,
-          rotateY: -30,
-          scale: isMobile ? 0.72 : 0.82,
-          opacity: 0.75,
-          zIndex: 5,
-        };
-      } else {
-        return {
-          x: normalizedOffset > 0 ? 600 * m : -600 * m,
-          z: -400,
-          rotateY: normalizedOffset > 0 ? -45 : 45,
-          scale: 0.6,
-          opacity: 0,
-          zIndex: 1,
-        };
-      }
-    }
-  }, [activeIndex, totalProjects, isMobile]);
+    },
+    [activeIndex, totalProjects, isMobile],
+  );
 
   if (loading) {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
+        className="scroll-mt-16 py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
@@ -175,7 +184,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
+        className="scroll-mt-16 py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
@@ -191,7 +200,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
+        className="scroll-mt-16 py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
@@ -216,6 +225,21 @@ export const Projects = () => {
         }
         .project-active-glow {
           animation: project-glow 3s ease-in-out infinite;
+        }
+        @keyframes project-border-flow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .project-gradient-border {
+          background: linear-gradient(135deg, #8b5cf6, #06b6d4, #8b5cf6, #06b6d4);
+          background-size: 300% 300%;
+          animation: project-border-flow 4s ease infinite;
+        }
+        .project-gradient-border-inactive {
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.6), rgba(139,92,246,0.6), rgba(6,182,212,0.6));
+          background-size: 300% 300%;
+          animation: project-border-flow 6s ease infinite;
         }
       `}</style>
 
@@ -251,7 +275,7 @@ export const Projects = () => {
 
         {/* Coverflow Carousel */}
         <div
-          className="relative h-[320px] sm:h-[440px] flex items-center justify-center"
+          className="relative h-[420px] sm:h-[440px] flex items-center justify-center"
           style={{ perspective: "1200px" }}
         >
           {/* Cards Container */}
@@ -267,7 +291,7 @@ export const Projects = () => {
                 return (
                   <motion.div
                     key={project._id}
-                    className={`absolute group/card rounded-2xl overflow-hidden ${isActive ? "project-active-glow" : ""}`}
+                    className={`absolute group/card rounded-2xl ${isActive ? "project-active-glow" : ""}`}
                     initial={false}
                     animate={{
                       x: style.x,
@@ -289,88 +313,103 @@ export const Projects = () => {
                     }}
                   >
                     <div
-                      className={`w-[240px] sm:w-[280px] h-[320px] sm:h-[380px] bg-dark-200/80 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-300 ${
+                      className={`p-[1.5px] rounded-2xl ${
                         isActive
-                          ? "border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20 group-hover/card:shadow-cyan-500/40 group-hover/card:border-cyan-500/70"
-                          : "border border-white/10 group-hover/card:border-white/20"
+                          ? "project-gradient-border"
+                          : "project-gradient-border-inactive"
                       }`}
-                      onClick={() => {
-                        if (!isActive) {
-                          setActiveIndex(index);
-                        }
-                      }}
                     >
-                      {/* Project Image */}
-                      <div className="relative h-36 sm:h-44 bg-dark-400 overflow-hidden">
-                        {/* Project Image or Code icon fallback */}
-                        {project.image ? (
-                          <img
-                            src={project.image}
-                            alt={project.title[currentLang]}
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <motion.div
-                              whileHover={{ rotate: 12, scale: 1.2 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <Code2
-                                className={`w-14 h-14 transition-all duration-500 ${
-                                  isActive
-                                    ? "text-primary/60 group-hover/card:text-primary/80"
-                                    : "text-gray-600 group-hover/card:text-gray-500"
-                                }`}
-                              />
-                            </motion.div>
-                          </div>
-                        )}
-
-                        {/* Active indicator with pulse */}
-                        {isActive && (
-                          <div className="absolute top-3 right-3">
-                            <div className="relative">
-                              <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                              <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-500 animate-ping opacity-75" />
+                      <div
+                        className={`w-[240px] sm:w-[280px] min-h-[320px] sm:min-h-[380px] bg-dark-200/80 backdrop-blur-sm rounded-[14px] overflow-hidden transition-all duration-300`}
+                        onClick={() => {
+                          if (!isActive) {
+                            setActiveIndex(index);
+                          }
+                        }}
+                      >
+                        {/* Project Image */}
+                        <div className="relative h-36 sm:h-44 bg-dark-400 overflow-hidden">
+                          {/* Project Image or Code icon fallback */}
+                          {project.image ? (
+                            <img
+                              src={project.image}
+                              alt={project.title[currentLang]}
+                              className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover/card:scale-110"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <motion.div
+                                whileHover={{ rotate: 12, scale: 1.2 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                <Code2
+                                  className={`w-14 h-14 transition-all duration-500 ${
+                                    isActive
+                                      ? "text-[#3282F6]/60 group-hover/card:text-[#3282F6]/80"
+                                      : "text-gray-600 group-hover/card:text-gray-500"
+                                  }`}
+                                />
+                              </motion.div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Project Info */}
-                      <div className="p-3 sm:p-5">
-                        <h3
-                          className={`text-sm sm:text-base font-bold mb-1 sm:mb-2 transition-all duration-300 ${
-                            isActive
-                              ? "text-white group-hover/card:text-primary"
-                              : "text-gray-300 group-hover/card:text-white"
-                          }`}
-                        >
-                          {project.title[currentLang]}
-                        </h3>
-                        <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed line-clamp-2 group-hover/card:text-gray-300 transition-colors duration-300">
-                          {project.description[currentLang]}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {project.technologies.slice(0, 4).map((tech) => (
-                            <motion.span
-                              key={tech}
-                              initial={false}
-                              whileHover={{ scale: 1.1, y: -2 }}
-                              className={`text-[10px] px-2 py-0.5 rounded-md border transition-all duration-300 cursor-default ${
-                                isActive
-                                  ? "bg-primary/20 text-primary border-primary/30 group-hover/card:bg-primary/30"
-                                  : "bg-primary/10 text-primary/60 border-primary/15 group-hover/card:bg-primary/15"
-                              }`}
-                            >
-                              {tech}
-                            </motion.span>
-                          ))}
-                          {project.technologies.length > 4 && (
-                            <span className="text-[10px] px-2 py-0.5 bg-dark-300/50 text-gray-500 rounded-md group-hover/card:bg-dark-300/70 transition-colors duration-300">
-                              +{project.technologies.length - 4}
-                            </span>
                           )}
+
+                          {/* Hover overlay with View Project link */}
+                          {project.link && (
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-10"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <ExternalLink className="w-6 h-6 text-white mb-1.5" />
+                              <span className="text-white text-xs sm:text-sm font-medium">
+                                {t("projects.viewProject")}
+                              </span>
+                            </a>
+                          )}
+
+                          {/* Active indicator with pulse */}
+                          {isActive && (
+                            <div className="absolute top-3 right-3">
+                              <div className="relative">
+                                <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                                <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-500 animate-ping opacity-75" />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Project Info */}
+                        <div className="p-3 sm:p-5">
+                          <h3
+                            className={`text-sm sm:text-base font-bold mb-1 sm:mb-2 transition-all duration-300 ${
+                              isActive
+                                ? "text-white group-hover/card:text-[#3282F6]"
+                                : "text-gray-300 group-hover/card:text-white"
+                            }`}
+                          >
+                            {project.title[currentLang]}
+                          </h3>
+                          <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed group-hover/card:text-gray-300 transition-colors duration-300">
+                            {project.description[currentLang]}
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.technologies.map((tech) => (
+                              <motion.span
+                                key={tech}
+                                initial={false}
+                                whileHover={{ scale: 1.1, y: -2 }}
+                                className={`text-[10px] px-2 py-0.5 rounded-md border transition-all duration-300 cursor-default ${
+                                  isActive
+                                    ? "bg-[#3282F6]/20 text-[#3282F6] border-[#3282F6]/30 group-hover/card:bg-[#3282F6]/30"
+                                    : "bg-[#3282F6]/10 text-[#3282F6]/60 border-[#3282F6]/15 group-hover/card:bg-[#3282F6]/15"
+                                }`}
+                              >
+                                {tech}
+                              </motion.span>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -398,24 +437,24 @@ export const Projects = () => {
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </motion.button>
-        </div>
 
-        {/* Dots Indicator */}
-        <div className="flex justify-center gap-3 mt-2">
-          {projects.map((_, i) => (
-            <motion.button
-              key={i}
-              onClick={() => setActiveIndex(i)}
-              animate={{
-                width: i === activeIndex ? 32 : 10,
-                backgroundColor: i === activeIndex ? "#8b5cf6" : "#4b5563",
-              }}
-              whileHover={{ scale: 1.3 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="h-2.5 rounded-full"
-            />
-          ))}
+          {/* Dots Indicator */}
+          <div className="absolute bottom-[-30px] left-0 right-0 flex justify-center gap-3 pb-2 z-20">
+            {projects.map((_, i) => (
+              <motion.button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                animate={{
+                  width: i === activeIndex ? 32 : 10,
+                  backgroundColor: i === activeIndex ? "#3282F6" : "#4b5563",
+                }}
+                whileHover={{ scale: 1.3 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="h-2.5 rounded-full"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -74,7 +74,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden"
+      className="scroll-mt-16 pt-4 pb-8 lg:pt-4 lg:pb-12"
       style={{ backgroundColor: "#000612" }}
     >
       <style>{`
@@ -97,14 +97,14 @@ export const Contact = () => {
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-4 sm:mb-8"
+          className="text-center mb-4"
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             <AnimatedText text={t("contact.title") + " "} />
