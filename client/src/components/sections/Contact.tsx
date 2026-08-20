@@ -74,7 +74,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="scroll-mt-16 pt-4 pb-8 lg:pt-4 lg:pb-12"
+      className="pt-4 pb-8 lg:pt-4 lg:pb-12"
       style={{ backgroundColor: "#000612" }}
     >
       <style>{`

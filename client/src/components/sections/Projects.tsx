@@ -168,7 +168,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
+        className="py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
@@ -184,7 +184,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
+        className="py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
@@ -200,7 +200,7 @@ export const Projects = () => {
     return (
       <section
         id="projects"
-        className="scroll-mt-16 py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
+        className="py-8 lg:py-0 lg:h-screen lg:overflow-hidden overflow-hidden"
         style={{ backgroundColor: "#040B1D" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4 w-full">
@@ -215,7 +215,7 @@ export const Projects = () => {
   return (
     <section
       id="projects"
-      className="scroll-mt-16 min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
+      className="min-h-screen lg:h-screen lg:overflow-hidden overflow-hidden"
       style={{ backgroundColor: "#040B1D" }}
     >
       <style>{`
