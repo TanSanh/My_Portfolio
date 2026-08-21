@@ -19,6 +19,7 @@ export const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -304,7 +305,8 @@ export const Projects = () => {
                       duration: 0.6,
                       ease: [0.32, 0.72, 0, 1],
                     }}
-                    whileHover={isActive ? { scale: 1.03, z: 50 } : {}}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
                     style={{
                       left: "50%",
                       marginLeft: isMobile ? "-120px" : "-140px",
@@ -329,7 +331,6 @@ export const Projects = () => {
                       >
                         {/* Project Image */}
                         <div className="relative h-36 sm:h-44 bg-dark-400 overflow-hidden">
-                          {/* Project Image or Code icon fallback */}
                           {project.image ? (
                             <img
                               src={project.image}
@@ -353,23 +354,37 @@ export const Projects = () => {
                             </div>
                           )}
 
-                          {/* Hover overlay with View Project link */}
-                          {project.link && (
+                          {/* Hover Overlay - Only on active card */}
+                          {isActive && project.link && (
                             <a
                               href={project.link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-10"
-                              onClick={(e) => e.stopPropagation()}
+                              className={`absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 z-20 ${
+                                hoveredIndex === index
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              }`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.open(project.link, "_blank");
+                              }}
                             >
-                              <ExternalLink className="w-6 h-6 text-white mb-1.5" />
-                              <span className="text-white text-xs sm:text-sm font-medium">
+                              <span
+                                className={`bg-white text-dark-300 px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg transition-all duration-300 ${
+                                  hoveredIndex === index
+                                    ? "translate-y-0 opacity-100"
+                                    : "translate-y-5 opacity-0"
+                                }`}
+                              >
                                 {t("projects.viewProject")}
+                                <ExternalLink className="w-4 h-4" />
                               </span>
                             </a>
                           )}
 
-                          {/* Active indicator with pulse */}
+                          {/* Active indicator */}
                           {isActive && (
                             <div className="absolute top-3 right-3">
                               <div className="relative">
